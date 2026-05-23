@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shashi · Job Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Cabinet+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c;--surf:#0d1117;--card:#111920;--card2:#161f28;
+  --border:#1c2830;--border2:#253340;--text:#d8eaf5;--muted:#5a7a90;
+  --dim:#2e4050;--lime:#aaff40;--lime2:#c8ff60;--blue:#38bdf8;
+  --green:#34d399;--amber:#fbbf24;--red:#f87171;--purple:#a78bfa;
+  --mono:'IBM Plex Mono',monospace;--head:'Cabinet Grotesk',sans-serif;
+  --r:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12px;display:flex;flex-direction:column}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+a{color:inherit;text-decoration:none}
+
+/* TOPBAR */
+.topbar{height:50px;display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;z-index:30}
+.logo{display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--border);height:100%;min-width:180px;flex-shrink:0}
+.logo-mark{width:30px;height:30px;background:var(--lime);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:800;font-size:14px;color:#07090c}
+.logo-name{font-family:var(--head);font-weight:700;font-size:14px}
+.logo-sub{font-size:9px;color:var(--muted);letter-spacing:.5px;margin-top:1px}
+.topbar-stats{display:flex;flex:1;overflow-x:auto;align-items:center}
+.stat-pill{display:flex;align-items:center;gap:7px;padding:0 14px;height:50px;cursor:pointer;transition:background .12s;border-right:1px solid var(--border);flex-shrink:0}
+.stat-pill:hover{background:var(--card)}
+.stat-pill.on{background:rgba(170,255,64,.05);border-bottom:2px solid var(--lime);margin-bottom:-1px}
+.sp-num{font-family:var(--head);font-weight:700;font-size:16px;color:var(--text)}
+.stat-pill.on .sp-num{color:var(--lime)}
+.sp-lbl{font-size:9px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
+.topbar-right{display:flex;align-items:center;gap:5px;padding:0 12px;border-left:1px solid var(--border);height:100%;flex-shrink:0}
+.tb-btn{padding:5px 11px;border:1px solid var(--border2);border-radius:var(--r);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:all .12s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.tb-btn:hover{color:var(--text);background:var(--card)}
+.tb-btn.primary{background:var(--lime);color:#07090c;border-color:var(--lime);font-weight:600}
+.tb-btn.primary:hover{background:var(--lime2)}
+.tb-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* FILTER BAR */
+.filterbar{height:40px;display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;padding:0 12px;overflow-x:auto;gap:0}
+.fb-label{font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:8px;white-space:nowrap;flex-shrink:0}
+.chip{padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;margin-right:4px;transition:all .12s;white-space:nowrap;flex-shrink:0}
+.chip:hover{color:var(--text)}
+.chip.on{border-color:var(--lime);color:var(--lime);background:rgba(170,255,64,.07)}
+.chip.on-gh{border-color:rgba(52,211,153,.4);color:var(--green);background:rgba(52,211,153,.07)}
+.chip.on-lv{border-color:rgba(167,139,250,.4);color:var(--purple);background:rgba(167,139,250,.07)}
+.chip.on-az{border-color:rgba(251,191,36,.4);color:var(--amber);background:rgba(251,191,36,.07)}
+.chip.on-rm{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.07)}
+.chip.on-remote{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.07)}
+.fb-sep{width:1px;height:20px;background:var(--border);margin:0 10px;flex-shrink:0}
+
+/* BODY */
+.body{display:flex;flex:1;overflow:hidden}
+
+/* LIST */
+.list-col{width:400px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.list-top{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0}
+.search-wrap{position:relative}
+.s-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:13px;pointer-events:none}
+.s-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px 7px 28px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;transition:border .12s}
+.s-input:focus{border-color:var(--lime)}
+.prog-bar{height:2px;background:var(--border);flex-shrink:0;overflow:hidden}
+.prog-fill{height:100%;background:var(--lime);width:0;transition:width .15s}
+.prog-txt{padding:4px 12px;font-size:10px;color:var(--muted);background:var(--surf);flex-shrink:0;display:none;border-bottom:1px solid var(--border);min-height:22px}
+.list-meta{padding:5px 12px;font-size:10px;color:var(--dim);background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.sort-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px}
+.sort-btn:hover{color:var(--text)}
+.list-scroll{overflow-y:auto;flex:1;padding:8px}
+
+/* CARDS */
+.jcard{border:1px solid var(--border);border-radius:var(--r);padding:12px 13px 11px;margin-bottom:5px;cursor:pointer;transition:all .12s;background:var(--card);position:relative;animation:fadeUp .18s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.jcard:hover{border-color:var(--border2);background:var(--card2)}
+.jcard.sel{border-color:var(--lime);background:rgba(170,255,64,.03)}
+.jcard.is-applied{border-left:3px solid var(--green);opacity:.72}
+.jcard.is-saved:not(.is-applied){border-left:3px solid var(--blue)}
+.jc-title{font-family:var(--head);font-weight:600;font-size:13px;line-height:1.3;padding-right:60px}
+.jc-company{font-size:11px;color:var(--muted);margin-top:2px}
+.jc-badges{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;align-items:center}
+.jc-right{position:absolute;top:11px;right:11px;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.jc-time{font-size:10px;color:var(--dim);white-space:nowrap}
+.jc-acts{display:flex;gap:3px}
+.ib{width:24px;height:24px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--dim);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.ib:hover{background:var(--surf);color:var(--text)}
+.ib.s-on{color:var(--blue);border-color:rgba(56,189,248,.3)}
+.ib.a-on{color:var(--green);border-color:rgba(52,211,153,.3)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;font-size:9px;padding:2px 6px;border-radius:20px;font-family:var(--mono);border:1px solid transparent;white-space:nowrap}
+.b-gh{background:rgba(52,211,153,.07);color:var(--green);border-color:rgba(52,211,153,.2)}
+.b-lv{background:rgba(167,139,250,.07);color:var(--purple);border-color:rgba(167,139,250,.2)}
+.b-az{background:rgba(251,191,36,.07);color:var(--amber);border-color:rgba(251,191,36,.2)}
+.b-rm{background:rgba(56,189,248,.07);color:var(--blue);border-color:rgba(56,189,248,.2)}
+.b-new{background:rgba(170,255,64,.09);color:var(--lime);border-color:rgba(170,255,64,.25)}
+.b-hot{background:rgba(248,113,113,.09);color:var(--red);border-color:rgba(248,113,113,.2)}
+.b-remote{background:rgba(56,189,248,.07);color:var(--blue);border-color:rgba(56,189,248,.2)}
+.b-loc{background:rgba(255,255,255,.03);color:var(--muted);border-color:var(--border)}
+.b-applied{background:rgba(52,211,153,.07);color:var(--green);border-color:rgba(52,211,153,.2)}
+.b-saved{background:rgba(56,189,248,.07);color:var(--blue);border-color:rgba(56,189,248,.2)}
+
+/* EMPTY */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;color:var(--muted);padding:40px;text-align:center}
+.empty .ei{font-size:34px;margin-bottom:4px}
+.empty .et{font-family:var(--head);font-weight:700;font-size:14px;color:var(--text)}
+.empty .es{font-size:11px;color:var(--muted);line-height:1.7;max-width:260px}
+
+/* DETAIL */
+.detail-col{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.detail-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;color:var(--dim)}
+.de-icon{font-size:32px;opacity:.4}
+.de-txt{font-size:11px}
+.dhero{padding:20px 24px 16px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0}
+.dh-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.dh-title{font-family:var(--head);font-weight:800;font-size:19px;color:var(--text);line-height:1.3;margin-bottom:4px}
+.dh-co{font-size:13px;color:var(--muted);margin-bottom:13px}
+.apply-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 24px;background:var(--lime);color:#07090c;border:none;border-radius:var(--r);font-family:var(--head);font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;transition:background .12s}
+.apply-cta:hover{background:var(--lime2)}
+.detail-acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.dact{padding:7px 12px;border:1px solid var(--border2);border-radius:var(--r);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;transition:all .12s;display:flex;align-items:center;gap:4px}
+.dact:hover{background:var(--card);color:var(--text)}
+.dact.s-on{border-color:rgba(56,189,248,.35);color:var(--blue);background:rgba(56,189,248,.06)}
+.dact.a-on{border-color:rgba(52,211,153,.35);color:var(--green);background:rgba(52,211,153,.06)}
+.applied-banner{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:var(--r);font-size:10px;color:var(--green);margin-top:6px}
+.dbody{overflow-y:auto;flex:1;padding:20px 24px 32px}
+.sec{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.sec:first-child{margin-top:0}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.info-cell{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px}
+.ic-lbl{font-size:9px;color:var(--dim);letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px}
+.ic-val{font-size:12px;color:var(--text)}
+.jd-text{font-size:12px;color:var(--muted);line-height:1.85;white-space:pre-wrap}
+.notes-area{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:11px;resize:vertical;min-height:72px;outline:none;line-height:1.6}
+.notes-area:focus{border-color:var(--lime)}
+.save-note-btn{margin-top:5px;padding:5px 12px;background:none;border:1px solid var(--border2);border-radius:5px;color:var(--muted);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .12s}
+.save-note-btn:hover{border-color:var(--lime);color:var(--lime)}
+
+/* QUICK SEARCH PANEL */
+.qs-panel{border-top:1px solid var(--border);padding:16px 24px;flex-shrink:0;background:var(--surf)}
+.qs-title{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.qs-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.qs-grid{display:flex;gap:6px;flex-wrap:wrap}
+.qs-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;text-decoration:none;transition:all .12s;white-space:nowrap}
+.qs-btn:hover{color:var(--text);border-color:var(--border2);background:var(--card2)}
+.qs-btn.li{border-color:rgba(10,102,194,.3);color:#4a9eff}
+.qs-btn.li:hover{background:rgba(10,102,194,.08)}
+.qs-btn.nk{border-color:rgba(255,123,0,.3);color:#ff9940}
+.qs-btn.nk:hover{background:rgba(255,123,0,.08)}
+.qs-btn.id{border-color:rgba(35,186,44,.3);color:#4ade80}
+.qs-btn.id:hover{background:rgba(35,186,44,.08)}
+.qs-btn.ww{border-color:rgba(167,139,250,.3);color:var(--purple)}
+.qs-btn.ww:hover{background:rgba(167,139,250,.08)}
+.qs-btn.wa{border-color:rgba(251,191,36,.3);color:var(--amber)}
+.qs-btn.wa:hover{background:rgba(251,191,36,.08)}
+.qs-note{font-size:9px;color:var(--dim);margin-top:8px;line-height:1.5}
+
+/* SPIN */
+.spin-sm{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(7,9,12,.25);border-top-color:#07090c;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ADZUNA NOTE */
+.az-setup{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:10px 12px;font-size:10px;color:var(--amber);line-height:1.6;margin-bottom:8px;display:none}
+.az-setup a{color:var(--lime);text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark">SR</div>
+    <div>
+      <div class="logo-name">Shashi · Jobs</div>
+      <div class="logo-sub">TSE / Integration Eng</div>
+    </div>
+  </div>
+  <div class="topbar-stats">
+    <div class="stat-pill on" data-v="all"     onclick="setView('all',this)"><div class="sp-num" id="sn-all">0</div><div class="sp-lbl">All Jobs</div></div>
+    <div class="stat-pill"    data-v="1h"      onclick="setView('1h',this)"><div class="sp-num" id="sn-1h">0</div><div class="sp-lbl">Last 1h</div></div>
+    <div class="stat-pill"    data-v="6h"      onclick="setView('6h',this)"><div class="sp-num" id="sn-6h">0</div><div class="sp-lbl">Last 6h</div></div>
+    <div class="stat-pill"    data-v="24h"     onclick="setView('24h',this)"><div class="sp-num" id="sn-24h">0</div><div class="sp-lbl">Last 24h</div></div>
+    <div class="stat-pill"    data-v="3d"      onclick="setView('3d',this)"><div class="sp-num" id="sn-3d">0</div><div class="sp-lbl">3 Days</div></div>
+    <div class="stat-pill"    data-v="7d"      onclick="setView('7d',this)"><div class="sp-num" id="sn-7d">0</div><div class="sp-lbl">7 Days</div></div>
+    <div class="stat-pill"    data-v="remote"  onclick="setView('remote',this)"><div class="sp-num" id="sn-remote">0</div><div class="sp-lbl">Remote</div></div>
+    <div class="stat-pill"    data-v="saved"   onclick="setView('saved',this)"><div class="sp-num" id="sn-saved">0</div><div class="sp-lbl">Saved</div></div>
+    <div class="stat-pill"    data-v="applied" onclick="setView('applied',this)"><div class="sp-num" id="sn-applied">0</div><div class="sp-lbl">Applied</div></div>
+  </div>
+  <div class="topbar-right">
+    <button class="tb-btn" onclick="openAzSetup()">⚙ Adzuna Key</button>
+    <button class="tb-btn primary" id="fetch-btn" onclick="fetchAll()">⟳ Fetch Jobs</button>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filterbar">
+  <span class="fb-label">Time</span>
+  <button class="chip on" data-t="all" onclick="setTime('all',this)">All time</button>
+  <button class="chip"    data-t="1h"  onclick="setTime('1h',this)">1h</button>
+  <button class="chip"    data-t="6h"  onclick="setTime('6h',this)">6h</button>
+  <button class="chip"    data-t="24h" onclick="setTime('24h',this)">24h</button>
+  <button class="chip"    data-t="3d"  onclick="setTime('3d',this)">3 days</button>
+  <button class="chip"    data-t="7d"  onclick="setTime('7d',this)">7 days</button>
+  <button class="chip"    data-t="30d" onclick="setTime('30d',this)">30 days</button>
+  <div class="fb-sep"></div>
+  <span class="fb-label">Source</span>
+  <button class="chip" data-s="gh"     onclick="toggleSrc('gh',this)">Greenhouse</button>
+  <button class="chip" data-s="lv"     onclick="toggleSrc('lv',this)">Lever</button>
+  <button class="chip" data-s="az"     onclick="toggleSrc('az',this)">Adzuna</button>
+  <button class="chip" data-s="rm"     onclick="toggleSrc('rm',this)">Remotive</button>
+  <button class="chip" data-s="remote" onclick="toggleSrc('remote',this)">Remote only</button>
+</div>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- LIST -->
+  <div class="list-col">
+    <div class="list-top">
+      <div class="search-wrap">
+        <span class="s-icon">⌕</span>
+        <input class="s-input" id="search" placeholder="Search title, company, location…" oninput="render()">
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="pfill"></div></div>
+    <div class="prog-txt" id="ptxt"></div>
+    <div class="list-meta">
+      <span id="list-count">0 jobs</span>
+      <button class="sort-btn" onclick="toggleSort()">⇅ <span id="sort-lbl">Newest first</span></button>
+    </div>
+    <div class="list-scroll" id="list-scroll">
+      <div class="empty">
+        <div class="ei">🎯</div>
+        <div class="et">Ready to fetch</div>
+        <div class="es">Click <strong>Fetch Jobs</strong> to pull live listings from Greenhouse, Lever, Adzuna &amp; Remotive.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="detail-col">
+    <div id="detail" style="display:flex;flex-direction:column;height:100%">
+      <div class="detail-empty">
+        <div class="de-icon">←</div>
+        <div class="de-txt">Select a job to view full details &amp; apply</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADZUNA SETUP MODAL -->
+<div id="az-modal" style="display:none;position:fixed;inset:0;background:rgba(7,9,12,.85);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+  <div style="background:var(--surf);border:1px solid var(--border2);border-radius:12px;width:480px;max-width:90vw;padding:24px">
+    <div style="font-family:var(--head);font-weight:700;font-size:16px;margin-bottom:6px">⚙ Adzuna API Setup</div>
+    <div style="font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+      Adzuna aggregates jobs from LinkedIn, Naukri, Indeed, and 100+ other Indian job boards into one free API.<br><br>
+      <strong style="color:var(--lime)">Get your free key in 2 minutes:</strong><br>
+      1. Go to <a href="https://developer.adzuna.com" target="_blank" style="color:var(--blue);text-decoration:underline">developer.adzuna.com</a><br>
+      2. Click "Register" → free account<br>
+      3. Copy your <strong>App ID</strong> and <strong>App Key</strong>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">App ID</div>
+      <input id="az-appid" style="width:100%;background:var(--card);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none" placeholder="e.g. 1a2b3c4d">
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">App Key</div>
+      <input id="az-appkey" type="password" style="width:100%;background:var(--card);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none" placeholder="your app key">
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button onclick="closeAzSetup()" style="padding:7px 16px;border:1px solid var(--border2);border-radius:6px;background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px">Cancel</button>
+      <button onclick="saveAzKey()" style="padding:7px 16px;border:none;border-radius:6px;background:var(--lime);color:#07090c;cursor:pointer;font-family:var(--head);font-weight:700;font-size:12px">Save &amp; Fetch</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* KEYWORDS — tuned to Shashi's resume */
+const KEYWORDS=[
+  'technical support','support engineer','integration engineer',
+  'api support','production support','application support',
+  'platform support','developer support','l2 support','l3 support',
+  'customer support engineer','cloud support','saas support',
+  'fintech support','payment support','banking support',
+  'software support','devops support','site reliability'
+];
+
+/* COMPANIES */
+const GH=[
+  'stripe','brex','plaid','mercury','ramp','airbase','moderntreasury','marqeta','adyen','checkout-com','rapyd',
+  'datadog','notion','hashicorp','mongodb','elastic','confluent','cloudflare','gitlab','figma','vercel',
+  'linear','retool','posthog','samsara','gleanwork','postman','rippling','lattice','benchling',
+  'airtable','asana','miro','segment','pagerduty','dynatrace','supabase','loom','dbt-labs',
+  'amplitude','mixpanel','freshworks','chargebee','zendesk','sprinklr'
+];
+const LV=[
+  'clari','aeratechnology','certifyos','fullstacklabs','megaport','agiloft','talend',
+  'gusto','netlify','grafana','clickhouse','neon','cockroachlabs','singlestore',
+  'hasura','ably','stytch','snyk','lacework','wiz','scale-ai',
+  'razorpay','cashfree','open-financial','niyo','slice-company','jupiter-money'
+];
+
+/* STATE */
+let jobs=[], selId=null, curView='all', timeFilter='all';
+let srcFilters=new Set(), sortAsc=false;
+let fetching=false, fetchDone=0, fetchTotal=0;
+
+const lsk=k=>localStorage.getItem('sr_'+k);
+const lss=(k,v)=>localStorage.setItem('sr_'+k,v);
+let savedIds=new Set(JSON.parse(lsk('saved')||'[]'));
+let appliedIds=new Set(JSON.parse(lsk('applied')||'[]'));
+let notesMap=JSON.parse(lsk('notes')||'{}');
+function persist(){lss('saved',JSON.stringify([...savedIds]));lss('applied',JSON.stringify([...appliedIds]));lss('notes',JSON.stringify(notesMap))}
+
+/* ADZUNA MODAL */
+function openAzSetup(){
+  document.getElementById('az-appid').value=lsk('az_id')||'';
+  document.getElementById('az-appkey').value=lsk('az_key')||'';
+  document.getElementById('az-modal').style.display='flex';
+}
+function closeAzSetup(){document.getElementById('az-modal').style.display='none'}
+function saveAzKey(){
+  lss('az_id',document.getElementById('az-appid').value.trim());
+  lss('az_key',document.getElementById('az-appkey').value.trim());
+  closeAzSetup();
+  fetchAll();
+}
+
+/* UTILS */
+function relevant(t){return KEYWORDS.some(k=>t.toLowerCase().includes(k))}
+function stripHtml(h){return(h||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim()}
+function isRemote(t,l){return['remote','wfh','work from home','anywhere'].some(k=>t.toLowerCase().includes(k)||l.toLowerCase().includes(k))}
+const TIME_MS={all:Infinity,'1h':3600000,'6h':21600000,'24h':86400000,'3d':259200000,'7d':604800000,'30d':2592000000};
+function withinTime(posted,key){
+  if(!posted||key==='all')return true;
+  const ms=Date.now()-new Date(posted).getTime();
+  return !isNaN(ms)&&ms<=TIME_MS[key];
+}
+function timeDiff(d){
+  if(!d)return'';
+  const ms=Date.now()-new Date(d).getTime();
+  if(isNaN(ms))return'';
+  const s=Math.round(ms/1000);
+  if(s<60)return s+'s ago';
+  const m=Math.round(s/60);
+  if(m<60)return m+'m ago';
+  const h=Math.round(m/60);
+  if(h<24)return h+'h ago';
+  const dy=Math.round(h/24);
+  return dy===1?'1 day ago':dy+'d ago';
+}
+function freshBadge(posted){
+  if(!posted)return null;
+  const ms=Date.now()-new Date(posted).getTime();
+  if(ms<3600000) return{label:'🔥 Just posted',cls:'b-hot'};
+  if(ms<86400000)return{label:'● New',cls:'b-new'};
+  return null;
+}
+function srcBadgeClass(src){return{greenhouse:'b-gh',lever:'b-lv',adzuna:'b-az',remotive:'b-rm'}[src]||'b-loc'}
+function srcLabel(src){return{greenhouse:'GH',lever:'LV',adzuna:'Adzuna',remotive:'Remote.io'}[src]||src}
+function srcFullName(src){return{greenhouse:'Greenhouse',lever:'Lever',adzuna:'Adzuna',remotive:'Remotive'}[src]||src}
+
+/* ── FETCH GREENHOUSE ── */
+async function fetchGH(token){
+  try{
+    const r=await fetch(`https://boards-api.greenhouse.io/v1/boards/${token}/jobs?content=true`,{signal:AbortSignal.timeout(9000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return(d.jobs||[]).filter(j=>relevant(j.title)).map(j=>({
+      id:'gh-'+j.id,source:'greenhouse',
+      title:j.title,
+      company:token.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      location:(j.location||{}).name||'',
+      url:j.absolute_url||`https://job-boards.greenhouse.io/${token}/jobs/${j.id}`,
+      posted:j.updated_at||null,
+      jd:stripHtml((j.content||'').slice(0,6000))
+    }));
+  }catch{return[]}
+}
+
+/* ── FETCH LEVER ── */
+async function fetchLV(token){
+  try{
+    const r=await fetch(`https://api.lever.co/v0/postings/${token}?mode=json`,{signal:AbortSignal.timeout(9000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return(Array.isArray(d)?d:[]).filter(j=>relevant(j.text)).map(j=>({
+      id:'lv-'+j.id,source:'lever',
+      title:j.text,
+      company:token.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      location:(j.categories||{}).location||'',
+      url:j.hostedUrl||`https://jobs.lever.co/${token}/${j.id}`,
+      posted:j.createdAt?new Date(j.createdAt).toISOString():null,
+      jd:stripHtml(((j.descriptionBody||'')+(j.lists||[]).map(l=>(l.text||'')+' '+(l.content||'')).join(' ')+(j.additional||'')).slice(0,6000))
+    }));
+  }catch{return[]}
+}
+
+/* ── FETCH ADZUNA (aggregates LinkedIn, Naukri, Indeed, Monster, etc.) ── */
+async function fetchAdzuna(){
+  const appId=lsk('az_id');
+  const appKey=lsk('az_key');
+  if(!appId||!appKey){
+    return[]; // silently skip if no key
+  }
+  const queries=['technical support engineer','integration engineer','api support engineer','production support'];
+  const allResults=[];
+  for(const q of queries){
+    try{
+      const url=`https://api.adzuna.com/v1/api/jobs/in/search/1?app_id=${appId}&app_key=${appKey}&results_per_page=20&what=${encodeURIComponent(q)}&content-type=application/json`;
+      const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const results=(d.results||[]).map(j=>({
+        id:'az-'+j.id,source:'adzuna',
+        title:j.title,
+        company:(j.company||{}).display_name||'',
+        location:(j.location||{}).display_name||'India',
+        url:j.redirect_url||j.adref||'',
+        posted:j.created||null,
+        salary:j.salary_min&&j.salary_max?`₹${Math.round(j.salary_min/1000)}k–₹${Math.round(j.salary_max/1000)}k`:'',
+        jd:stripHtml((j.description||'').slice(0,4000))
+      }));
+      allResults.push(...results);
+    }catch{continue}
+    await new Promise(r=>setTimeout(r,300));
+  }
+  // deduplicate by url
+  const seen=new Set();
+  return allResults.filter(j=>{if(!j.url||seen.has(j.url))return false;seen.add(j.url);return true});
+}
+
+/* ── FETCH REMOTIVE (free public API, real remote jobs) ── */
+async function fetchRemotive(){
+  try{
+    const queries=['technical-support','devops-sysadmin'];
+    const all=[];
+    for(const cat of queries){
+      const r=await fetch(`https://remotive.com/api/remote-jobs?category=${cat}&limit=30`,{signal:AbortSignal.timeout(10000)});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const filtered=(d.jobs||[]).filter(j=>relevant(j.title)).map(j=>({
+        id:'rm-'+j.id,source:'remotive',
+        title:j.title,
+        company:j.company_name||'',
+        location:'Remote',
+        url:j.url||'',
+        posted:j.publication_date||null,
+        jd:stripHtml((j.description||'').slice(0,4000))
+      }));
+      all.push(...filtered);
+    }
+    return all;
+  }catch{return[]}
+}
+
+/* ── BATCH RUNNER ── */
+async function batchRun(items,fn,size=6){
+  const res=[];
+  for(let i=0;i<items.length;i+=size){
+    const rows=await Promise.all(items.slice(i,i+size).map(async t=>{
+      const r=await fn(t);
+      fetchDone++;
+      document.getElementById('pfill').style.width=(fetchDone/fetchTotal*100)+'%';
+      document.getElementById('ptxt').textContent=`Scanning ${fetchDone}/${fetchTotal} — ${t}`;
+      return r;
+    }));
+    res.push(...rows.flat());
+    if(i+size<items.length)await new Promise(r=>setTimeout(r,150));
+  }
+  return res;
+}
+
+/* ── MAIN FETCH ── */
+async function fetchAll(){
+  if(fetching)return;
+  fetching=true;fetchDone=0;jobs=[];selId=null;renderDetail(null);
+
+  const hasAz=!!(lsk('az_id')&&lsk('az_key'));
+  fetchTotal=GH.length+LV.length+(hasAz?4:0)+2; // +4 adzuna queries, +2 remotive
+
+  const btn=document.getElementById('fetch-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span> Fetching…';
+  const pt=document.getElementById('ptxt');pt.style.display='block';
+
+  // Greenhouse + Lever in parallel
+  const[gh,lv]=await Promise.all([
+    batchRun(GH,fetchGH),
+    batchRun(LV,fetchLV)
+  ]);
+
+  // Adzuna
+  pt.textContent='Fetching from Adzuna (LinkedIn + Naukri + Indeed + Monster)…';
+  const az=await fetchAdzuna();
+  fetchDone=Math.min(fetchDone+4,fetchTotal);
+  document.getElementById('pfill').style.width=(fetchDone/fetchTotal*100)+'%';
+
+  // Remotive
+  pt.textContent='Fetching from Remotive…';
+  const rm=await fetchRemotive();
+  fetchDone=fetchTotal;
+  document.getElementById('pfill').style.width='100%';
+
+  // Merge + deduplicate
+  const seen=new Set();
+  jobs=[...gh,...lv,...az,...rm].filter(j=>{
+    if(!j.url||seen.has(j.url))return false;
+    seen.add(j.url);return true;
+  });
+  jobs.sort((a,b)=>(b.posted?new Date(b.posted):0)-(a.posted?new Date(a.posted):0));
+
+  const azNote=hasAz?`, ${az.length} from Adzuna`:'';
+  pt.textContent=`✓ Done — ${jobs.length} jobs (${gh.length} GH, ${lv.length} LV${azNote}, ${rm.length} Remote)`;
+  if(!hasAz){
+    pt.textContent+=' · Add Adzuna key for LinkedIn/Naukri/Indeed jobs';
+  }
+  setTimeout(()=>{pt.style.display='none';document.getElementById('pfill').style.width='0'},6000);
+
+  btn.disabled=false;btn.innerHTML='⟳ Fetch Jobs';fetching=false;
+  updateStats();render();
+}
+
+/* STATS */
+function updateStats(){
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+  s('sn-all',   jobs.length);
+  s('sn-1h',    jobs.filter(j=>withinTime(j.posted,'1h')).length);
+  s('sn-6h',    jobs.filter(j=>withinTime(j.posted,'6h')).length);
+  s('sn-24h',   jobs.filter(j=>withinTime(j.posted,'24h')).length);
+  s('sn-3d',    jobs.filter(j=>withinTime(j.posted,'3d')).length);
+  s('sn-7d',    jobs.filter(j=>withinTime(j.posted,'7d')).length);
+  s('sn-remote',jobs.filter(j=>isRemote(j.title,j.location)).length);
+  s('sn-saved', jobs.filter(j=>savedIds.has(j.id)).length);
+  s('sn-applied',jobs.filter(j=>appliedIds.has(j.id)).length);
+}
+
+/* VIEW / FILTER */
+function setView(v,el){
+  curView=v;
+  document.querySelectorAll('.stat-pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  const tv=['1h','6h','24h','3d','7d'];
+  if(tv.includes(v)){
+    timeFilter=v;
+    document.querySelectorAll('.chip[data-t]').forEach(c=>c.classList.remove('on'));
+    const tc=document.querySelector(`.chip[data-t="${v}"]`);
+    if(tc)tc.classList.add('on');
+  }
+  render();
+}
+function setTime(t,el){
+  timeFilter=t;
+  document.querySelectorAll('.chip[data-t]').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  const pill=document.querySelector(`.stat-pill[data-v="${t}"]`);
+  if(pill){document.querySelectorAll('.stat-pill').forEach(p=>p.classList.remove('on'));pill.classList.add('on');curView=t;}
+  else{document.querySelectorAll('.stat-pill').forEach(p=>p.classList.remove('on'));document.querySelector('.stat-pill[data-v="all"]').classList.add('on');curView='all';}
+  render();
+}
+function toggleSrc(s,el){
+  const onClass='on-'+s;
+  if(srcFilters.has(s)){srcFilters.delete(s);el.className='chip';}
+  else{srcFilters.add(s);el.className='chip '+onClass;}
+  render();
+}
+function toggleSort(){
+  sortAsc=!sortAsc;
+  document.getElementById('sort-lbl').textContent=sortAsc?'Oldest first':'Newest first';
+  render();
+}
+
+function getFiltered(){
+  let j=jobs.filter(x=>withinTime(x.posted,timeFilter));
+  if(curView==='remote')  j=j.filter(x=>isRemote(x.title,x.location));
+  if(curView==='saved')   j=j.filter(x=>savedIds.has(x.id));
+  if(curView==='applied') j=j.filter(x=>appliedIds.has(x.id));
+  if(srcFilters.size){
+    j=j.filter(x=>{
+      if(srcFilters.has('gh')&&x.source==='greenhouse')return true;
+      if(srcFilters.has('lv')&&x.source==='lever')return true;
+      if(srcFilters.has('az')&&x.source==='adzuna')return true;
+      if(srcFilters.has('rm')&&x.source==='remotive')return true;
+      if(srcFilters.has('remote')&&isRemote(x.title,x.location))return true;
+      return false;
+    });
+  }
+  const q=(document.getElementById('search')||{}).value?.toLowerCase()||'';
+  if(q)j=j.filter(x=>x.title.toLowerCase().includes(q)||x.company.toLowerCase().includes(q)||x.location.toLowerCase().includes(q));
+  return[...j].sort((a,b)=>{
+    const da=a.posted?new Date(a.posted).getTime():0;
+    const db=b.posted?new Date(b.posted).getTime():0;
+    return sortAsc?da-db:db-da;
+  });
+}
+
+/* RENDER LIST */
+function render(){
+  const filtered=getFiltered();
+  const el=document.getElementById('list-scroll');
+  document.getElementById('list-count').textContent=
+    `${filtered.length} job${filtered.length!==1?'s':''}${timeFilter!=='all'?' · '+timeFilter:''}`;
+  updateStats();
+  if(!filtered.length&&jobs.length===0){
+    el.innerHTML=`<div class="empty"><div class="ei">🎯</div><div class="et">Ready to fetch</div>
+      <div class="es">Click <strong>Fetch Jobs</strong> to pull live listings from Greenhouse, Lever, Adzuna &amp; Remotive.</div></div>`;
+    return;
+  }
+  if(!filtered.length){
+    el.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No jobs found</div>
+      <div class="es">Try a wider time range or clear source filters.</div></div>`;
+    return;
+  }
+  el.innerHTML=filtered.map((j,i)=>{
+    const fb=freshBadge(j.posted);const td=timeDiff(j.posted);
+    const remote=isRemote(j.title,j.location);
+    const saved=savedIds.has(j.id);const applied=appliedIds.has(j.id);
+    const sel=selId===j.id;
+    return`<div class="jcard${sel?' sel':''}${applied?' is-applied':''}${saved&&!applied?' is-saved':''}"
+      style="animation-delay:${Math.min(i*.025,.5)}s" onclick="select('${j.id}')">
+      <div class="jc-title">${j.title}</div>
+      <div class="jc-company">${j.company}</div>
+      <div class="jc-badges">
+        <span class="badge ${srcBadgeClass(j.source)}">${srcLabel(j.source)}</span>
+        ${j.location?`<span class="badge b-loc">📍 ${j.location.slice(0,26)}</span>`:''}
+        ${remote?`<span class="badge b-remote">Remote</span>`:''}
+        ${fb?`<span class="badge ${fb.cls}">${fb.label}</span>`:''}
+        ${j.salary?`<span class="badge b-loc">💰 ${j.salary}</span>`:''}
+        ${applied?`<span class="badge b-applied">Applied</span>`:''}
+        ${saved&&!applied?`<span class="badge b-saved">Saved</span>`:''}
+      </div>
+      <div class="jc-right">
+        <span class="jc-time">${td}</span>
+        <div class="jc-acts">
+          <button class="ib${saved?' s-on':''}" title="${saved?'Unsave':'Save'}" onclick="event.stopPropagation();toggleSave('${j.id}')">⊹</button>
+          <button class="ib${applied?' a-on':''}" title="${applied?'Undo':'Mark applied'}" onclick="event.stopPropagation();toggleApplied('${j.id}')">✓</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* SELECT */
+function select(id){selId=id;const job=jobs.find(j=>j.id===id);render();renderDetail(job)}
+
+/* DETAIL */
+function renderDetail(job){
+  const el=document.getElementById('detail');
+  if(!job){
+    el.innerHTML=`<div class="detail-empty"><div class="de-icon">←</div><div class="de-txt">Select a job to view full details &amp; apply</div></div>`;
+    return;
+  }
+  const fb=freshBadge(job.posted);const td=timeDiff(job.posted);
+  const remote=isRemote(job.title,job.location);
+  const saved=savedIds.has(job.id);const applied=appliedIds.has(job.id);
+  const note=notesMap[job.id]||'';
+  const sn=srcFullName(job.source);
+  const sb=srcBadgeClass(job.source);
+
+  // Build quick-search links for LinkedIn/Naukri/Indeed using this job's title+company
+  const q=encodeURIComponent(job.title);
+  const co=encodeURIComponent(job.company);
+  const liUrl=`https://www.linkedin.com/jobs/search/?keywords=${q}+${co}&location=India&f_TPR=r604800`;
+  const nkUrl=`https://www.naukri.com/${job.title.toLowerCase().replace(/\s+/g,'-')}-jobs-in-india?q=${q}&k=${q}`;
+  const idUrl=`https://in.indeed.com/jobs?q=${q}+${co}&l=India`;
+
+  el.innerHTML=`
+  <div class="dhero">
+    <div class="dh-badges">
+      <span class="badge ${sb}">${sn}</span>
+      ${job.location?`<span class="badge b-loc">📍 ${job.location}</span>`:''}
+      ${remote?`<span class="badge b-remote">Remote</span>`:''}
+      ${fb?`<span class="badge ${fb.cls}">${fb.label}</span>`:''}
+      ${td?`<span class="badge b-loc">${td}</span>`:''}
+      ${job.salary?`<span class="badge b-loc">💰 ${job.salary}</span>`:''}
+    </div>
+    <div class="dh-title">${job.title}</div>
+    <div class="dh-co">${job.company}</div>
+    <a class="apply-cta" href="${job.url}" target="_blank" rel="noopener">Apply on ${sn} ↗</a>
+    <div class="detail-acts">
+      <button class="dact${saved?' s-on':''}" onclick="toggleSave('${job.id}')">${saved?'✓ Saved':'⊹ Save job'}</button>
+      <button class="dact${applied?' a-on':''}" onclick="toggleApplied('${job.id}')">${applied?'✓ Applied':'✓ Mark applied'}</button>
+    </div>
+    ${applied?`<div class="applied-banner">✓ Marked as applied</div>`:''}
+  </div>
+  <div class="dbody">
+    <div class="sec">Job Info</div>
+    <div class="info-grid">
+      <div class="info-cell"><div class="ic-lbl">Company</div><div class="ic-val">${job.company}</div></div>
+      <div class="info-cell"><div class="ic-lbl">Location</div><div class="ic-val">${job.location||'Not specified'}</div></div>
+      <div class="info-cell"><div class="ic-lbl">Posted</div><div class="ic-val">${job.posted?new Date(job.posted).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'Unknown'}</div></div>
+    </div>
+    <div class="sec">Also search on</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px">
+      <a class="qs-btn li" href="${liUrl}" target="_blank" rel="noopener">🔵 LinkedIn ↗</a>
+      <a class="qs-btn nk" href="${nkUrl}" target="_blank" rel="noopener">🟠 Naukri ↗</a>
+      <a class="qs-btn id" href="${idUrl}" target="_blank" rel="noopener">🟢 Indeed ↗</a>
+    </div>
+    <div style="font-size:9px;color:var(--dim);margin-bottom:12px">Opens a pre-filtered search on each platform for this role at this company.</div>
+    <div class="sec">Job Description</div>
+    <div class="jd-text">${job.jd||'Click Apply to view the full description on the company\'s website.'}</div>
+    <div class="sec">My Notes</div>
+    <textarea class="notes-area" id="note-${job.id}" placeholder="Recruiter name · salary discussed · interview stage · follow-up date…">${note}</textarea>
+    <button class="save-note-btn" onclick="saveNote('${job.id}')">Save Note</button>
+  </div>`;
+}
+
+/* ACTIONS */
+function toggleSave(id){savedIds.has(id)?savedIds.delete(id):savedIds.add(id);persist();updateStats();render();if(selId===id)renderDetail(jobs.find(j=>j.id===id))}
+function toggleApplied(id){appliedIds.has(id)?appliedIds.delete(id):appliedIds.add(id);persist();updateStats();render();if(selId===id)renderDetail(jobs.find(j=>j.id===id))}
+function saveNote(id){
+  const v=document.getElementById('note-'+id)?.value||'';
+  notesMap[id]=v;persist();
+  const btn=document.querySelector('.save-note-btn');
+  if(btn){btn.textContent='✓ Saved';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent='Save Note';btn.style.color=''},1500)}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){selId=null;render();renderDetail(null)}});
+</script>
+</body>
+</html>
