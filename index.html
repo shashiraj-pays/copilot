@@ -11,6 +11,7 @@
   --border:#1c2830;--border2:#253340;--text:#d8eaf5;--muted:#5a7a90;
   --dim:#2e4050;--lime:#aaff40;--lime2:#c8ff60;--blue:#38bdf8;
   --green:#34d399;--amber:#fbbf24;--red:#f87171;--purple:#a78bfa;--orange:#fb923c;
+  --india:#ff9933;--remote:#38bdf8;--world:#a78bfa;
   --mono:'IBM Plex Mono',monospace;--head:'Cabinet Grotesk',sans-serif;--r:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
@@ -23,37 +24,42 @@ a{color:inherit;text-decoration:none}
 
 /* TOPBAR */
 .topbar{height:50px;display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;z-index:30}
-.logo{display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--border);height:100%;min-width:176px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;padding:0 16px;border-right:1px solid var(--border);height:100%;min-width:172px;flex-shrink:0}
 .logo-mark{width:30px;height:30px;background:var(--lime);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:800;font-size:14px;color:#07090c}
 .logo-name{font-family:var(--head);font-weight:700;font-size:14px}
 .logo-sub{font-size:9px;color:var(--muted);letter-spacing:.5px;margin-top:1px}
 .topbar-stats{display:flex;flex:1;overflow-x:auto;align-items:center}
-.sp{display:flex;align-items:center;gap:7px;padding:0 14px;height:50px;cursor:pointer;transition:background .12s;border-right:1px solid var(--border);flex-shrink:0;position:relative}
+.sp{display:flex;flex-direction:column;justify-content:center;padding:0 14px;height:50px;cursor:pointer;transition:background .12s;border-right:1px solid var(--border);flex-shrink:0;position:relative}
 .sp:hover{background:var(--card)}
-.sp.on{background:rgba(170,255,64,.05);border-bottom:2px solid var(--lime);margin-bottom:-1px}
-.sp-num{font-family:var(--head);font-weight:700;font-size:16px;color:var(--text)}
+.sp.on{border-bottom:2px solid var(--lime);margin-bottom:-1px}
 .sp.on .sp-num{color:var(--lime)}
-.sp-lbl{font-size:9px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
-.new-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--surf);display:none}
-.topbar-right{display:flex;align-items:center;gap:5px;padding:0 12px;border-left:1px solid var(--border);height:100%;flex-shrink:0}
-.tb-btn{padding:5px 11px;border:1px solid var(--border2);border-radius:var(--r);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:all .12s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.sp-num{font-family:var(--head);font-weight:700;font-size:15px;color:var(--text);white-space:nowrap}
+.sp-lbl{font-size:9px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;margin-top:1px}
+.sp.india-pill.on .sp-num{color:var(--india)}
+.sp.remote-pill.on .sp-num{color:var(--remote)}
+.sp.world-pill.on .sp-num{color:var(--world)}
+.new-dot{position:absolute;top:8px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--red);border:1.5px solid var(--surf);display:none}
+.topbar-right{display:flex;align-items:center;gap:5px;padding:0 10px;border-left:1px solid var(--border);height:100%;flex-shrink:0}
+.tb-btn{padding:5px 10px;border:1px solid var(--border2);border-radius:var(--r);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:all .12s;display:flex;align-items:center;gap:4px;white-space:nowrap}
 .tb-btn:hover{color:var(--text);background:var(--card)}
 .tb-btn.primary{background:var(--lime);color:#07090c;border-color:var(--lime);font-weight:600}
 .tb-btn.primary:hover{background:var(--lime2)}
 .tb-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* ALERT BANNER */
-.alert-banner{display:none;padding:7px 16px;font-size:11px;background:rgba(251,191,36,.07);border-bottom:1px solid rgba(251,191,36,.2);flex-shrink:0;align-items:center;gap:8px}
-.alert-banner.show{display:flex}
-.alert-banner.error{background:rgba(248,113,113,.07);border-bottom-color:rgba(248,113,113,.2);color:var(--red)}
-.alert-banner.success{background:rgba(52,211,153,.07);border-bottom-color:rgba(52,211,153,.2);color:var(--green)}
-.alert-banner.info{color:var(--amber)}
-.alert-x{margin-left:auto;cursor:pointer;color:var(--muted);background:none;border:none;font-size:14px}
+/* GEO FILTER BAR */
+.geobar{height:38px;display:flex;align-items:center;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0;padding:0 12px;gap:6px;overflow-x:auto}
+.geo-chip{padding:4px 12px;border-radius:20px;border:1.5px solid var(--border2);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;transition:all .12s;white-space:nowrap;flex-shrink:0;font-weight:500}
+.geo-chip:hover{color:var(--text)}
+.geo-chip.on-all{border-color:var(--lime);color:var(--lime);background:rgba(170,255,64,.07)}
+.geo-chip.on-india{border-color:var(--india);color:var(--india);background:rgba(255,153,51,.08)}
+.geo-chip.on-remote{border-color:var(--remote);color:var(--remote);background:rgba(56,189,248,.08)}
+.geo-chip.on-world{border-color:var(--world);color:var(--world);background:rgba(167,139,250,.08)}
+.geo-sep{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0}
 
-/* FILTER BAR */
-.filterbar{height:40px;display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;padding:0 12px;overflow-x:auto}
-.fb-label{font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:8px;white-space:nowrap;flex-shrink:0}
-.chip{padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;margin-right:4px;transition:all .12s;white-space:nowrap;flex-shrink:0}
+/* SOURCE+TIME FILTER BAR */
+.filterbar{height:36px;display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;padding:0 12px;overflow-x:auto;gap:0}
+.fb-label{font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px;white-space:nowrap;flex-shrink:0}
+.chip{padding:3px 9px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;margin-right:3px;transition:all .12s;white-space:nowrap;flex-shrink:0}
 .chip:hover{color:var(--text)}
 .chip.on{border-color:var(--lime);color:var(--lime);background:rgba(170,255,64,.07)}
 .chip.on-gh{border-color:rgba(52,211,153,.4);color:var(--green);background:rgba(52,211,153,.07)}
@@ -61,53 +67,47 @@ a{color:inherit;text-decoration:none}
 .chip.on-ash{border-color:rgba(251,191,36,.4);color:var(--amber);background:rgba(251,191,36,.07)}
 .chip.on-az{border-color:rgba(56,189,248,.4);color:var(--blue);background:rgba(56,189,248,.07)}
 .chip.on-rm{border-color:rgba(251,146,60,.4);color:var(--orange);background:rgba(251,146,60,.07)}
-.fb-sep{width:1px;height:20px;background:var(--border);margin:0 10px;flex-shrink:0}
+.fb-sep{width:1px;height:18px;background:var(--border);margin:0 8px;flex-shrink:0}
 
 /* BODY */
 .body-wrap{display:flex;flex:1;overflow:hidden}
 
-/* LIST */
-.list-col{width:390px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
-.list-top{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0}
+/* LIST COL */
+.list-col{width:380px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.list-top{padding:8px 12px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0}
 .search-wrap{position:relative}
 .s-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:13px;pointer-events:none}
-.s-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:7px 10px 7px 28px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;transition:border .12s}
+.s-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:6px 10px 6px 28px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;transition:border .12s}
 .s-input:focus{border-color:var(--lime)}
-
-/* PROGRESS */
-.prog-wrap{flex-shrink:0}
-.prog-bar{height:2px;background:var(--border);overflow:hidden}
+.prog-bar{height:2px;background:var(--border);flex-shrink:0;overflow:hidden}
 .prog-fill{height:100%;background:var(--lime);width:0;transition:width .1s}
-.prog-status{padding:5px 12px;font-size:10px;color:var(--muted);background:var(--surf);border-bottom:1px solid var(--border);display:none;flex-direction:column;gap:3px}
-.prog-status.show{display:flex}
-.source-row{display:flex;align-items:center;gap:6px;font-size:10px}
-.src-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.src-ok{background:var(--green)}
-.src-err{background:var(--red)}
-.src-loading{background:var(--amber);animation:blink 1s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
-.src-pending{background:var(--dim)}
-
-.list-meta{padding:5px 12px;font-size:10px;color:var(--dim);background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.prog-txt{padding:4px 12px;font-size:10px;color:var(--muted);background:var(--surf);border-bottom:1px solid var(--border);display:none;min-height:20px}
+.list-meta{padding:4px 12px;font-size:10px;color:var(--dim);background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
 .sort-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px}
 .sort-btn:hover{color:var(--text)}
 .list-scroll{overflow-y:auto;flex:1;padding:8px}
 
+/* GEO PILL ON CARD */
+.geo-pill{display:inline-flex;align-items:center;font-size:9px;padding:1px 6px;border-radius:20px;font-family:var(--mono);border:1px solid transparent;white-space:nowrap;font-weight:500}
+.gp-india{background:rgba(255,153,51,.1);color:var(--india);border-color:rgba(255,153,51,.25)}
+.gp-remote{background:rgba(56,189,248,.08);color:var(--remote);border-color:rgba(56,189,248,.2)}
+.gp-world{background:rgba(167,139,250,.08);color:var(--world);border-color:rgba(167,139,250,.2)}
+
 /* JOB CARDS */
-.jcard{border:1px solid var(--border);border-radius:var(--r);padding:12px 13px 10px;margin-bottom:5px;cursor:pointer;transition:all .12s;background:var(--card);position:relative;animation:fadeUp .18s ease both}
+.jcard{border:1px solid var(--border);border-radius:var(--r);padding:11px 12px 10px;margin-bottom:5px;cursor:pointer;transition:all .12s;background:var(--card);position:relative;animation:fadeUp .18s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .jcard:hover{border-color:var(--border2);background:var(--card2)}
 .jcard.sel{border-color:var(--lime);background:rgba(170,255,64,.03)}
 .jcard.is-applied{border-left:3px solid var(--green);opacity:.72}
 .jcard.is-saved:not(.is-applied){border-left:3px solid var(--blue)}
 .jcard.is-new-job{border-top:2px solid var(--red)}
-.jc-title{font-family:var(--head);font-weight:600;font-size:13px;line-height:1.3;padding-right:58px}
+.jc-title{font-family:var(--head);font-weight:600;font-size:13px;line-height:1.3;padding-right:56px}
 .jc-company{font-size:11px;color:var(--muted);margin-top:2px}
-.jc-badges{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;align-items:center}
-.jc-right{position:absolute;top:11px;right:10px;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.jc-badges{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap;align-items:center}
+.jc-right{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
 .jc-time{font-size:10px;color:var(--dim);white-space:nowrap}
 .jc-acts{display:flex;gap:3px}
-.ib{width:24px;height:24px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--dim);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .12s;text-decoration:none}
+.ib{width:23px;height:23px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--dim);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .12s;text-decoration:none}
 .ib:hover{background:var(--surf);color:var(--text)}
 .ib.s-on{color:var(--blue);border-color:rgba(56,189,248,.3)}
 .ib.a-on{color:var(--green);border-color:rgba(52,211,153,.3)}
@@ -121,7 +121,6 @@ a{color:inherit;text-decoration:none}
 .b-rm{background:rgba(251,146,60,.07);color:var(--orange);border-color:rgba(251,146,60,.2)}
 .b-new{background:rgba(170,255,64,.09);color:var(--lime);border-color:rgba(170,255,64,.25)}
 .b-hot{background:rgba(248,113,113,.09);color:var(--red);border-color:rgba(248,113,113,.2)}
-.b-remote{background:rgba(56,189,248,.07);color:var(--blue);border-color:rgba(56,189,248,.2)}
 .b-loc{background:rgba(255,255,255,.03);color:var(--muted);border-color:var(--border)}
 .b-applied{background:rgba(52,211,153,.07);color:var(--green);border-color:rgba(52,211,153,.2)}
 .b-saved{background:rgba(56,189,248,.07);color:var(--blue);border-color:rgba(56,189,248,.2)}
@@ -135,10 +134,9 @@ a{color:inherit;text-decoration:none}
 /* DETAIL */
 .detail-col{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .detail-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;color:var(--dim)}
-.de-icon{font-size:32px;opacity:.4}
-.de-txt{font-size:11px}
+.de-icon{font-size:32px;opacity:.4}.de-txt{font-size:11px}
 .dhero{padding:18px 22px 14px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0}
-.dh-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.dh-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;align-items:center}
 .dh-title{font-family:var(--head);font-weight:800;font-size:18px;color:var(--text);line-height:1.3;margin-bottom:3px}
 .dh-co{font-size:13px;color:var(--muted);margin-bottom:12px}
 .apply-cta{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--lime);color:#07090c;border:none;border-radius:var(--r);font-family:var(--head);font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;transition:background .12s}
@@ -158,44 +156,51 @@ a{color:inherit;text-decoration:none}
 .ic-lbl{font-size:9px;color:var(--dim);letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
 .ic-val{font-size:12px;color:var(--text)}
 .jd-text{font-size:12px;color:var(--muted);line-height:1.85;white-space:pre-wrap}
-.jd-loading{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;padding:12px 0}
-.notes-area{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:11px;resize:vertical;min-height:66px;outline:none;line-height:1.6}
+.jd-loading{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;padding:8px 0}
+.notes-area{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:11px;resize:vertical;min-height:60px;outline:none;line-height:1.6}
 .notes-area:focus{border-color:var(--lime)}
 .save-note-btn{margin-top:5px;padding:5px 12px;background:none;border:1px solid var(--border2);border-radius:5px;color:var(--muted);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .12s}
 .save-note-btn:hover{border-color:var(--lime);color:var(--lime)}
 .also-search{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
-.qs-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid var(--border2);border-radius:var(--r);background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;text-decoration:none;transition:all .12s}
+.qs-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border:1px solid var(--border2);border-radius:var(--r);background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:10px;text-decoration:none;transition:all .12s}
 .qs-btn:hover{color:var(--text);background:var(--card2)}
 
 /* TRACKER */
-.tracker-col{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .tracker-header{padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surf);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
 .tracker-stats{display:flex;gap:12px}
 .ts-item{text-align:center}
 .ts-num{font-family:var(--head);font-weight:700;font-size:18px}
 .ts-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.tracker-body{overflow-y:auto;flex:1;padding:16px}
+.tracker-body{overflow-y:auto;flex:1;padding:14px}
 .kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;min-width:700px}
-.k-col{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;min-height:200px}
-.k-head{padding:9px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.k-col{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;min-height:180px}
+.k-head{padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .k-title{font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:uppercase}
 .k-count{font-size:10px;color:var(--muted)}
-.k-cards{padding:8px;flex:1;display:flex;flex-direction:column;gap:5px}
-.k-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:9px 10px;cursor:pointer;transition:all .12s}
+.k-cards{padding:7px;flex:1;display:flex;flex-direction:column;gap:5px}
+.k-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;transition:all .12s}
 .k-card:hover{border-color:var(--border2);background:var(--card2)}
 .k-card-title{font-family:var(--head);font-weight:600;font-size:12px;line-height:1.3;margin-bottom:2px}
 .k-card-co{font-size:10px;color:var(--muted)}
-.k-card-date{font-size:9px;color:var(--dim);margin-top:5px}
+.k-card-date{font-size:9px;color:var(--dim);margin-top:4px}
 .k-card-overdue{color:var(--red)}
-.k-actions{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
-.k-btn{padding:2px 7px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:9px;transition:all .12s}
+.k-actions{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap}
+.k-btn{padding:2px 7px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--dim);cursor:pointer;font-family:var(--mono);font-size:9px}
 .k-btn:hover{color:var(--text)}
-.k-empty{font-size:10px;color:var(--dim);text-align:center;padding:16px}
+.k-empty{font-size:10px;color:var(--dim);text-align:center;padding:14px}
 .stage-applied{border-top:2px solid var(--blue)}
 .stage-screening{border-top:2px solid var(--amber)}
 .stage-interview{border-top:2px solid var(--purple)}
 .stage-offer{border-top:2px solid var(--green)}
 .stage-rejected{border-top:2px solid var(--red)}
+
+/* BANNER */
+.banner{display:none;padding:6px 16px;font-size:11px;border-bottom:1px solid;flex-shrink:0;align-items:center;gap:8px}
+.banner.show{display:flex}
+.banner.info{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.2);color:var(--amber)}
+.banner.error{background:rgba(248,113,113,.07);border-color:rgba(248,113,113,.2);color:var(--red)}
+.banner.success{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.2);color:var(--green)}
+.bx{margin-left:auto;cursor:pointer;background:none;border:none;color:var(--muted);font-size:14px}
 
 /* MODALS */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(7,9,12,.85);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -203,18 +208,18 @@ a{color:inherit;text-decoration:none}
 .modal{background:var(--surf);border:1px solid var(--border2);border-radius:12px;width:440px;max-width:92vw;padding:22px 24px;max-height:90vh;overflow-y:auto}
 .modal-title{font-family:var(--head);font-weight:700;font-size:16px;margin-bottom:6px}
 .modal-sub{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:16px}
-.modal-row{margin-bottom:12px}
-.modal-lbl{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;display:block}
+.modal-row{margin-bottom:11px}
+.modal-lbl{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;display:block}
 .modal-input{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none}
 .modal-input:focus{border-color:var(--lime)}
-.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .btn-ghost{padding:7px 14px;border:1px solid var(--border2);border-radius:6px;background:none;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px}
 .btn-ghost:hover{color:var(--text)}
 .btn-solid{padding:7px 14px;border:none;border-radius:6px;background:var(--lime);color:#07090c;cursor:pointer;font-family:var(--head);font-weight:700;font-size:12px}
 .btn-solid:hover{background:var(--lime2)}
 .spin-sm{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(7,9,12,.25);border-top-color:#07090c;border-radius:50%;animation:spin .6s linear infinite}
+.spin-muted{display:inline-block;width:9px;height:9px;border:1.5px solid var(--border2);border-top-color:var(--muted);border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.spin-muted{display:inline-block;width:10px;height:10px;border:1.5px solid var(--border2);border-top-color:var(--muted);border-radius:50%;animation:spin .6s linear infinite}
 </style>
 </head>
 <body>
@@ -226,18 +231,26 @@ a{color:inherit;text-decoration:none}
     <div><div class="logo-name">Shashi · Jobs</div><div class="logo-sub">TSE / Integration Eng</div></div>
   </div>
   <div class="topbar-stats">
-    <div class="sp on" data-v="jobs" onclick="setView('jobs',this)">
-      <div><div class="sp-num" id="sn-all">0</div><div class="sp-lbl">All Jobs</div></div>
+    <div class="sp on" data-v="all" onclick="setTopView('all',this)">
+      <div class="sp-num" id="sn-all">0</div><div class="sp-lbl">All</div>
       <div class="new-dot" id="new-dot"></div>
     </div>
-    <div class="sp" data-v="1h"      onclick="setView('1h',this)"><div class="sp-num" id="sn-1h">0</div><div class="sp-lbl">Last 1h</div></div>
-    <div class="sp" data-v="6h"      onclick="setView('6h',this)"><div class="sp-num" id="sn-6h">0</div><div class="sp-lbl">Last 6h</div></div>
-    <div class="sp" data-v="24h"     onclick="setView('24h',this)"><div class="sp-num" id="sn-24h">0</div><div class="sp-lbl">Last 24h</div></div>
-    <div class="sp" data-v="3d"      onclick="setView('3d',this)"><div class="sp-num" id="sn-3d">0</div><div class="sp-lbl">3 Days</div></div>
-    <div class="sp" data-v="7d"      onclick="setView('7d',this)"><div class="sp-num" id="sn-7d">0</div><div class="sp-lbl">7 Days</div></div>
-    <div class="sp" data-v="remote"  onclick="setView('remote',this)"><div class="sp-num" id="sn-remote">0</div><div class="sp-lbl">Remote</div></div>
-    <div class="sp" data-v="saved"   onclick="setView('saved',this)"><div class="sp-num" id="sn-saved">0</div><div class="sp-lbl">Saved</div></div>
-    <div class="sp" data-v="tracker" onclick="setView('tracker',this)"><div class="sp-num" id="sn-tracker">0</div><div class="sp-lbl">Tracker</div></div>
+    <div class="sp india-pill" data-v="india" onclick="setTopView('india',this)">
+      <div class="sp-num" id="sn-india">0</div><div class="sp-lbl">🇮🇳 India</div>
+    </div>
+    <div class="sp remote-pill" data-v="remote" onclick="setTopView('remote',this)">
+      <div class="sp-num" id="sn-remote">0</div><div class="sp-lbl">🌐 Remote</div>
+    </div>
+    <div class="sp world-pill" data-v="world" onclick="setTopView('world',this)">
+      <div class="sp-num" id="sn-world">0</div><div class="sp-lbl">🌍 Worldwide</div>
+    </div>
+    <div class="sp" data-v="1h"  onclick="setTopView('1h',this)"><div class="sp-num" id="sn-1h">0</div><div class="sp-lbl">1h</div></div>
+    <div class="sp" data-v="6h"  onclick="setTopView('6h',this)"><div class="sp-num" id="sn-6h">0</div><div class="sp-lbl">6h</div></div>
+    <div class="sp" data-v="24h" onclick="setTopView('24h',this)"><div class="sp-num" id="sn-24h">0</div><div class="sp-lbl">24h</div></div>
+    <div class="sp" data-v="3d"  onclick="setTopView('3d',this)"><div class="sp-num" id="sn-3d">0</div><div class="sp-lbl">3d</div></div>
+    <div class="sp" data-v="7d"  onclick="setTopView('7d',this)"><div class="sp-num" id="sn-7d">0</div><div class="sp-lbl">7d</div></div>
+    <div class="sp" data-v="saved"   onclick="setTopView('saved',this)"><div class="sp-num" id="sn-saved">0</div><div class="sp-lbl">Saved</div></div>
+    <div class="sp" data-v="tracker" onclick="setTopView('tracker',this)"><div class="sp-num" id="sn-tracker">0</div><div class="sp-lbl">Tracker</div></div>
   </div>
   <div class="topbar-right">
     <button class="tb-btn" onclick="openAzModal()">⚙ Adzuna</button>
@@ -246,15 +259,18 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ALERT BANNER -->
-<div class="alert-banner info" id="banner">
-  <span id="banner-txt"></span>
-  <button class="alert-x" onclick="closeBanner()">✕</button>
-</div>
+<!-- BANNER -->
+<div class="banner info" id="banner"><span id="banner-txt"></span><button class="bx" onclick="closeBanner()">✕</button></div>
 
-<!-- FILTER BAR -->
-<div class="filterbar" id="filterbar">
-  <span class="fb-label">Time</span>
+<!-- GEO FILTER BAR -->
+<div class="geobar" id="geobar">
+  <span style="font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px;flex-shrink:0">Location</span>
+  <button class="geo-chip on-all" data-g="all"    onclick="setGeo('all',this)">🌐 All Locations</button>
+  <button class="geo-chip"        data-g="india"  onclick="setGeo('india',this)">🇮🇳 India only</button>
+  <button class="geo-chip"        data-g="remote" onclick="setGeo('remote',this)">🌐 Remote only</button>
+  <button class="geo-chip"        data-g="world"  onclick="setGeo('world',this)">🌍 Rest of world</button>
+  <div class="geo-sep"></div>
+  <span style="font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px;flex-shrink:0">Time</span>
   <button class="chip on" data-t="all" onclick="setTime('all',this)">All</button>
   <button class="chip" data-t="1h"  onclick="setTime('1h',this)">1h</button>
   <button class="chip" data-t="6h"  onclick="setTime('6h',this)">6h</button>
@@ -262,19 +278,17 @@ a{color:inherit;text-decoration:none}
   <button class="chip" data-t="3d"  onclick="setTime('3d',this)">3d</button>
   <button class="chip" data-t="7d"  onclick="setTime('7d',this)">7d</button>
   <button class="chip" data-t="30d" onclick="setTime('30d',this)">30d</button>
-  <div class="fb-sep"></div>
-  <span class="fb-label">Source</span>
-  <button class="chip" data-s="gh"     onclick="toggleSrc('gh',this)">Greenhouse</button>
-  <button class="chip" data-s="lv"     onclick="toggleSrc('lv',this)">Lever</button>
-  <button class="chip" data-s="ash"    onclick="toggleSrc('ash',this)">Ashby</button>
-  <button class="chip" data-s="az"     onclick="toggleSrc('az',this)">Adzuna</button>
-  <button class="chip" data-s="rm"     onclick="toggleSrc('rm',this)">Remotive</button>
-  <button class="chip" data-s="remote" onclick="toggleSrc('remote',this)">Remote only</button>
+  <div class="geo-sep"></div>
+  <span style="font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px;flex-shrink:0">Source</span>
+  <button class="chip" data-s="gh"  onclick="toggleSrc('gh',this)">Greenhouse</button>
+  <button class="chip" data-s="lv"  onclick="toggleSrc('lv',this)">Lever</button>
+  <button class="chip" data-s="ash" onclick="toggleSrc('ash',this)">Ashby</button>
+  <button class="chip" data-s="az"  onclick="toggleSrc('az',this)">Adzuna</button>
+  <button class="chip" data-s="rm"  onclick="toggleSrc('rm',this)">Remotive</button>
 </div>
 
 <!-- BODY -->
 <div class="body-wrap" id="body-wrap">
-
   <!-- JOBS VIEW -->
   <div id="jobs-view" style="display:flex;flex:1;overflow:hidden">
     <div class="list-col">
@@ -284,22 +298,17 @@ a{color:inherit;text-decoration:none}
           <input class="s-input" id="search" placeholder="Search title, company, location…" oninput="renderList()">
         </div>
       </div>
-      <div class="prog-wrap">
-        <div class="prog-bar"><div class="prog-fill" id="pfill"></div></div>
-        <div class="prog-status" id="pstatus">
-          <div id="pstatus-main" style="color:var(--muted)"></div>
-          <div id="pstatus-sources" style="display:flex;gap:10px;flex-wrap:wrap"></div>
-        </div>
-      </div>
+      <div class="prog-bar"><div class="prog-fill" id="pfill"></div></div>
+      <div class="prog-txt" id="ptxt"></div>
       <div class="list-meta">
         <span id="list-count">0 jobs</span>
-        <button class="sort-btn" onclick="toggleSort()">⇅ <span id="sort-lbl">Newest first</span></button>
+        <button class="sort-btn" onclick="toggleSort()">⇅ <span id="sort-lbl">Newest</span></button>
       </div>
       <div class="list-scroll" id="list-scroll">
         <div class="empty">
           <div class="ei">🎯</div>
           <div class="et">Ready to fetch</div>
-          <div class="es">Click <strong>⟳ Fetch Jobs</strong> to pull live listings from Greenhouse, Lever, Ashby &amp; Remotive.<br><br>Add <strong>Adzuna key</strong> to also get Naukri, Indeed &amp; Shine jobs.</div>
+          <div class="es">Click <strong>⟳ Fetch Jobs</strong> to pull live listings.<br><br>Use <strong>🇮🇳 India</strong> or <strong>🌐 Remote</strong> filters to narrow down.</div>
         </div>
       </div>
     </div>
@@ -309,7 +318,6 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
   </div>
-
   <!-- TRACKER VIEW -->
   <div id="tracker-view" style="display:none;flex:1;flex-direction:column;overflow:hidden">
     <div class="tracker-header">
@@ -329,24 +337,21 @@ a{color:inherit;text-decoration:none}
 <!-- ADZUNA MODAL -->
 <div class="modal-bg" id="az-modal">
   <div class="modal">
-    <div class="modal-title">⚙ Adzuna API — Free Setup</div>
-    <div class="modal-sub">
-      Adzuna pulls jobs from <strong>Naukri, Indeed, Shine, Monster, TimesJobs</strong> and 100+ Indian job boards.<br><br>
-      <strong style="color:var(--lime)">Get your free key in 2 min:</strong><br>
-      1. Go to <a href="https://developer.adzuna.com" target="_blank" style="color:var(--blue);text-decoration:underline">developer.adzuna.com</a><br>
-      2. Register free → copy <strong>App ID</strong> and <strong>App Key</strong>
+    <div class="modal-title">⚙ Adzuna — Free API Setup</div>
+    <div class="modal-sub">Pulls jobs from <strong>Naukri, Indeed, Shine, Monster, TimesJobs</strong> and 100+ Indian job boards.<br><br>
+      <strong style="color:var(--lime)">Free at developer.adzuna.com</strong> — no card needed, 1,000 calls/month.
     </div>
     <div class="modal-row"><label class="modal-lbl">App ID</label><input class="modal-input" id="az-id" placeholder="e.g. 1a2b3c4d"></div>
     <div class="modal-row"><label class="modal-lbl">App Key</label><input class="modal-input" id="az-key" type="password" placeholder="your app key"></div>
     <div class="modal-foot">
       <button class="btn-ghost" onclick="closeAzModal()">Cancel</button>
-      <a class="btn-ghost" href="https://developer.adzuna.com" target="_blank" style="display:flex;align-items:center;text-decoration:none">Get free key ↗</a>
+      <a class="btn-ghost" href="https://developer.adzuna.com" target="_blank" style="display:flex;align-items:center">Get free key ↗</a>
       <button class="btn-solid" onclick="saveAzKey()">Save &amp; Fetch</button>
     </div>
   </div>
 </div>
 
-<!-- APP DETAIL MODAL -->
+<!-- APP MODAL -->
 <div class="modal-bg" id="app-modal">
   <div class="modal">
     <div class="modal-title" id="app-modal-title">Update Application</div>
@@ -374,66 +379,95 @@ a{color:inherit;text-decoration:none}
 <script>
 'use strict';
 
-/* ── VERIFIED COMPANY TOKENS ─────────────────────────────────────────
-   Only tokens that actually exist on each platform.
-   Wrong tokens = silent empty = no jobs shown.
-─────────────────────────────────────────────────────────────────── */
-const GH_COMPANIES = [
-  // Payments / Fintech
-  'stripe','brex','plaid','airbase','moderntreasury','marqeta','adyen',
-  'rapyd','klarna','affirm','nium','airwallex','paysafe',
-  // SaaS / Cloud
-  'datadog','notion','hashicorp','mongodb','elastic','confluent','cloudflare',
-  'gitlab','figma','vercel','linear','retool','posthog','samsara','gleanwork',
-  'postman','rippling','lattice','benchling','airtable','asana','miro',
-  'segment','pagerduty','dynatrace','supabase','loom','amplitude','mixpanel',
-  // Support Tools
-  'zendesk','intercom','freshworks','chargebee','sprinklr','helpscout',
+/* ═══════════════════════════════════════════════════════════════
+   VERIFIED COMPANY TOKENS
+   Only tokens confirmed to exist on each platform.
+   ═══════════════════════════════════════════════════════════════ */
+
+// INDIA KEYWORDS for geo-detection
+const INDIA_CITIES = [
+  'india','bangalore','bengaluru','hyderabad','mumbai','delhi','ncr',
+  'pune','chennai','noida','gurgaon','gurugram','kolkata','ahmedabad',
+  'jaipur','kochi','trivandrum','coimbatore','chandigarh','mohali',
+  'remote - india','india remote','remote india'
+];
+
+// Greenhouse — verified tokens with India/Remote TSE postings
+const GH = [
+  // Confirmed India/Remote TSE roles
+  'gleanwork',      // TSE India roles confirmed
+  'samsara',        // TSE Bengaluru confirmed
+  'narvar',         // TSE Remote-India confirmed
+  'postman',        // TSE Bangalore confirmed
+  'bottomlinetechnologies', // TSE Bangalore confirmed
+  // Strong India presence
+  'freshworks','chargebee','sprinklr','zendesk','intercom',
+  'pagerduty','elastic','mongodb','cloudflare','gitlab',
+  'figma','rippling','lattice','asana','miro','segment',
+  'amplitude','mixpanel','hubspot','dynatrace','supabase',
+  // Fintech
+  'stripe','brex','plaid','airbase','moderntreasury','marqeta',
+  'adyen','rapyd','nium','airwallex',
+  // Enterprise Support
+  'servicenow','salesforce','atlassian','docusign','twilio',
+  'okta','ping-identity','onelogin','forgerock',
   // Security
-  'crowdstrike','snyk','lacework','wiz','cyberark','rapid7',
-  // India Active
-  'swiggy','razorpay','chargebee','freshworks'
+  'crowdstrike','snyk','lacework','wiz','rapid7','cyberark',
+  // DevTools / Observability
+  'hashicorp','datadog','newrelic','sumo-logic','honeycomb-io',
+  // India Startups
+  'razorpay','cashfree','chargebee','freshworks','clevertap',
+  'browserstack','testbook','unacademy','meesho'
 ];
 
-const LV_COMPANIES = [
-  // Verified Lever tokens
-  'clari','certifyos','fullstacklabs','megaport','agiloft','talend',
-  'gusto','netlify','grafana','cockroachlabs','hasura','ably','stytch',
-  'snyk','lacework','scale-ai','cashfree','open-financial',
-  'servicenow','kustomer','talkdesk','front-app'
+const LV = [
+  // Confirmed India roles
+  'certifyos',      // Pan-India confirmed
+  'talend',         // Bangalore confirmed
+  'thinkahead',     // Hyderabad/Gurugram confirmed (AHEAD)
+  'clari',          // Remote India confirmed
+  // General TSE on Lever
+  'fullstacklabs','megaport','agiloft','gusto','netlify',
+  'grafana','neon','cockroachlabs','hasura','ably','stytch',
+  'scale-ai','cashfree','open-financial','niyo',
+  'kustomer','talkdesk','front-app','helpscout',
+  // More India-active
+  'decentro','setu','hyperface','signalx',
+  'innovaccer','healthifyme','darwinbox','leadsquared'
 ];
 
-const ASH_COMPANIES = [
-  // Verified Ashby job board tokens
-  'linear','mercury','ramp','deel','remote','descript','coda','raycast',
-  'superhuman','liveblocks','resend','trigger-dev','buf','encore',
-  'turso','motherduck','neon','fly-io','railway'
+const ASH = [
+  // Ashby-hosted companies
+  'linear','mercury','ramp','deel','remote','descript','coda',
+  'raycast','superhuman','liveblocks','resend','neon',
+  'motherduck','turso','fly-io','railway','render',
+  'retool','planetscale','supabase','posthog','cal',
+  'formbricks','typebot','trigger-dev','inngest'
 ];
 
-/* ── KEYWORDS — tuned to Shashi's resume ─────────────────────────── */
+/* ── KEYWORDS ─────────────────────────────────────────────── */
 const KW = [
   'technical support','support engineer','integration engineer',
   'api support','production support','application support',
   'platform support','developer support','l2 support','l3 support',
   'customer support engineer','cloud support','saas support',
-  'fintech support','payment support','banking support',
-  'software support','devops support','site reliability','it support'
+  'payment support','banking support','software support',
+  'devops support','site reliability','it support','helpdesk',
+  'customer success engineer','solutions engineer'
 ];
 
-/* ── STATE ──────────────────────────────────────────────────────── */
-let jobs = [], selId = null, curView = 'jobs', timeFilter = 'all';
-let srcFilters = new Set(), sortAsc = false;
-let fetching = false;
+/* ── STATE ────────────────────────────────────────────────── */
+let jobs=[], selId=null, curGeo='all', timeFilter='all';
+let srcFilters=new Set(), sortAsc=false, fetching=false;
+let fetchDone=0, fetchTotal=1;
 
-const lsk = k => localStorage.getItem('sr_'+k);
-const lss = (k,v) => localStorage.setItem('sr_'+k, v);
-
-let savedIds   = new Set(JSON.parse(lsk('saved')   || '[]'));
-let appliedIds = new Set(JSON.parse(lsk('applied') || '[]'));
-let notesMap   = JSON.parse(lsk('notes')   || '{}');
-let appData    = JSON.parse(lsk('appdata') || '{}');
-let seenIds    = new Set(JSON.parse(lsk('seenIds') || '[]'));
-
+const lsk=k=>localStorage.getItem('sr_'+k);
+const lss=(k,v)=>localStorage.setItem('sr_'+k,v);
+let savedIds   = new Set(JSON.parse(lsk('saved')  ||'[]'));
+let appliedIds = new Set(JSON.parse(lsk('applied')||'[]'));
+let notesMap   = JSON.parse(lsk('notes')  ||'{}');
+let appData    = JSON.parse(lsk('appdata')||'{}');
+let seenIds    = new Set(JSON.parse(lsk('seenIds')||'[]'));
 function persist(){
   lss('saved',   JSON.stringify([...savedIds]));
   lss('applied', JSON.stringify([...appliedIds]));
@@ -441,463 +475,379 @@ function persist(){
   lss('appdata', JSON.stringify(appData));
 }
 
-/* ── UTILS ──────────────────────────────────────────────────────── */
-function relevant(t){ return KW.some(k => t.toLowerCase().includes(k)) }
-function stripHtml(h){ return (h||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim() }
-function isRemote(t,l){ return ['remote','wfh','work from home','anywhere'].some(k => t.toLowerCase().includes(k) || l.toLowerCase().includes(k)) }
-
-const TMS = { all:Infinity,'1h':3600000,'6h':21600000,'24h':86400000,'3d':259200000,'7d':604800000,'30d':2592000000 };
-function withinTime(d,k){
-  if(!d || k==='all') return true;
-  const ms = Date.now() - new Date(d).getTime();
-  return !isNaN(ms) && ms <= TMS[k];
+/* ── GEO DETECTION ────────────────────────────────────────── */
+function detectGeo(title='', location=''){
+  const loc = (title+' '+location).toLowerCase();
+  // Remote first
+  if(['remote','wfh','work from home','anywhere','distributed'].some(k=>loc.includes(k))){
+    // Remote India vs pure remote
+    if(INDIA_CITIES.some(c=>loc.includes(c))) return 'india'; // India-remote counts as India
+    return 'remote';
+  }
+  // India cities
+  if(INDIA_CITIES.some(c=>loc.includes(c))) return 'india';
+  // Empty location — could be remote or unspecified
+  if(!location.trim()) return 'remote'; // treat unspecified as remote-friendly
+  return 'world';
 }
+function geoPill(geo){
+  if(geo==='india')  return '<span class="geo-pill gp-india">🇮🇳 India</span>';
+  if(geo==='remote') return '<span class="geo-pill gp-remote">🌐 Remote</span>';
+  return '<span class="geo-pill gp-world">🌍 Worldwide</span>';
+}
+
+/* ── UTILS ────────────────────────────────────────────────── */
+function relevant(t){ return KW.some(k=>t.toLowerCase().includes(k)) }
+function stripHtml(h){ return (h||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim() }
+const TMS={all:Infinity,'1h':3600000,'6h':21600000,'24h':86400000,'3d':259200000,'7d':604800000,'30d':2592000000};
+function withinTime(d,k){ if(!d||k==='all')return true; const ms=Date.now()-new Date(d).getTime(); return !isNaN(ms)&&ms<=TMS[k] }
 function timeDiff(d){
-  if(!d) return '';
-  const ms = Date.now() - new Date(d).getTime();
-  if(isNaN(ms)) return '';
-  const s = Math.round(ms/1000);
-  if(s < 60) return s+'s ago';
-  const m = Math.round(s/60);
-  if(m < 60) return m+'m ago';
-  const h = Math.round(m/60);
-  if(h < 24) return h+'h ago';
-  const dy = Math.round(h/24);
-  return dy === 1 ? '1 day ago' : dy+'d ago';
+  if(!d)return''; const ms=Date.now()-new Date(d).getTime(); if(isNaN(ms))return'';
+  const s=Math.round(ms/1000);if(s<60)return s+'s ago';
+  const m=Math.round(s/60);if(m<60)return m+'m ago';
+  const h=Math.round(m/60);if(h<24)return h+'h ago';
+  const dy=Math.round(h/24);return dy===1?'1d ago':dy+'d ago';
 }
 function freshBadge(d){
-  if(!d) return null;
-  const ms = Date.now() - new Date(d).getTime();
-  if(ms < 3600000)  return { t:'🔥 Just posted', c:'b-hot' };
-  if(ms < 86400000) return { t:'● New', c:'b-new' };
+  if(!d)return null; const ms=Date.now()-new Date(d).getTime();
+  if(ms<3600000) return{t:'🔥 Just now',c:'b-hot'};
+  if(ms<86400000)return{t:'● New',c:'b-new'};
   return null;
 }
-const SRC_BADGE = { greenhouse:'b-gh', lever:'b-lv', ashby:'b-ash', adzuna:'b-az', remotive:'b-rm' };
-const SRC_SHORT = { greenhouse:'GH', lever:'LV', ashby:'ASH', adzuna:'Adzuna', remotive:'Remote' };
-const SRC_FULL  = { greenhouse:'Greenhouse', lever:'Lever', ashby:'Ashby', adzuna:'Adzuna', remotive:'Remotive' };
+const SB={greenhouse:'b-gh',lever:'b-lv',ashby:'b-ash',adzuna:'b-az',remotive:'b-rm'};
+const SS={greenhouse:'GH',lever:'LV',ashby:'ASH',adzuna:'Adzuna',remotive:'Remote'};
+const SF={greenhouse:'Greenhouse',lever:'Lever',ashby:'Ashby',adzuna:'Adzuna',remotive:'Remotive'};
 
-/* ── SOURCE STATUS TRACKER ──────────────────────────────────────── */
-const srcStatus = {};
-function initSrcStatus(sources){
-  sources.forEach(s => srcStatus[s] = 'loading');
-  renderSrcStatus();
-}
-function setSrcStatus(src, status, count){
-  srcStatus[src] = { status, count };
-  renderSrcStatus();
-}
-function renderSrcStatus(){
-  const el = document.getElementById('pstatus-sources');
-  if(!el) return;
-  el.innerHTML = Object.entries(srcStatus).map(([src,v])=>{
-    const st = typeof v === 'object' ? v.status : v;
-    const cnt = typeof v === 'object' ? v.count : null;
-    const cls = { ok:'src-ok', error:'src-err', loading:'src-loading', skip:'src-pending' }[st] || 'src-pending';
-    const label = cnt !== null ? `${SRC_FULL[src]||src}: ${cnt}` : (SRC_FULL[src]||src);
-    return `<div class="source-row"><div class="src-dot ${cls}"></div><span style="color:var(--muted)">${label}</span></div>`;
-  }).join('');
-}
-
-/* ── PROGRESS ───────────────────────────────────────────────────── */
-let fetchDone = 0, fetchTotal = 1;
-function tickProgress(label){
-  fetchDone++;
-  const pct = Math.min(Math.round(fetchDone/fetchTotal*100), 99);
-  document.getElementById('pfill').style.width = pct+'%';
-  document.getElementById('pstatus-main').textContent = label || `Scanning ${fetchDone}/${fetchTotal}…`;
-}
-function doneProgress(msg){
-  document.getElementById('pfill').style.width = '100%';
-  document.getElementById('pstatus-main').textContent = msg;
-  setTimeout(()=>{
-    document.getElementById('pstatus').classList.remove('show');
-    document.getElementById('pfill').style.width = '0';
-  }, 5000);
-}
-
-/* ── FETCH GREENHOUSE ───────────────────────────────────────────── */
-// FIX: Removed content=true — now fetches list fast, loads JD on demand
+/* ── FETCH GREENHOUSE (no content=true) ───────────────────── */
 async function fetchGH(token){
   try{
-    const r = await fetch(
-      `https://boards-api.greenhouse.io/v1/boards/${token}/jobs`,
-      { signal: AbortSignal.timeout(8000) }
-    );
-    if(!r.ok) return [];
-    const d = await r.json();
-    return (d.jobs||[]).filter(j => relevant(j.title)).map(j=>({
-      id: 'gh-'+j.id, source: 'greenhouse',
-      title: j.title,
-      company: token.replace(/-/g,' ').replace(/\b\w/g, c=>c.toUpperCase()),
-      location: (j.location||{}).name || '',
-      url: j.absolute_url || `https://job-boards.greenhouse.io/${token}/jobs/${j.id}`,
-      posted: j.updated_at || null,
-      jd: null, // loaded on demand
-      _ghToken: token, _ghId: j.id
+    const r=await fetch(`https://boards-api.greenhouse.io/v1/boards/${token}/jobs`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return (d.jobs||[]).filter(j=>relevant(j.title)).map(j=>({
+      id:'gh-'+j.id, source:'greenhouse',
+      title:j.title,
+      company:token.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      location:(j.location||{}).name||'',
+      url:j.absolute_url||`https://job-boards.greenhouse.io/${token}/jobs/${j.id}`,
+      posted:j.updated_at||null,
+      jd:null, _ghToken:token, _ghId:j.id
     }));
-  }catch{ return [] }
+  }catch{return[]}
 }
-
-/* ── FETCH GH JD ON DEMAND ──────────────────────────────────────── */
-async function fetchGHjd(token, id){
+async function loadGHjd(token,id){
   try{
-    const r = await fetch(`https://boards-api.greenhouse.io/v1/boards/${token}/jobs/${id}`, { signal: AbortSignal.timeout(8000) });
-    if(!r.ok) return null;
-    const d = await r.json();
+    const r=await fetch(`https://boards-api.greenhouse.io/v1/boards/${token}/jobs/${id}`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return null;
+    const d=await r.json();
     return stripHtml((d.content||'').slice(0,6000));
-  }catch{ return null }
+  }catch{return null}
 }
 
-/* ── FETCH LEVER ────────────────────────────────────────────────── */
+/* ── FETCH LEVER ──────────────────────────────────────────── */
 async function fetchLV(token){
   try{
-    const r = await fetch(
-      `https://api.lever.co/v0/postings/${token}?mode=json`,
-      { signal: AbortSignal.timeout(8000) }
-    );
-    if(!r.ok) return [];
-    const d = await r.json();
-    return (Array.isArray(d)?d:[]).filter(j => relevant(j.text)).map(j=>({
-      id: 'lv-'+j.id, source: 'lever',
-      title: j.text,
-      company: token.replace(/-/g,' ').replace(/\b\w/g, c=>c.toUpperCase()),
-      location: (j.categories||{}).location || '',
-      url: j.hostedUrl || `https://jobs.lever.co/${token}/${j.id}`,
-      posted: j.createdAt ? new Date(j.createdAt).toISOString() : null,
-      jd: stripHtml(((j.descriptionBody||'')+(j.lists||[]).map(l=>(l.text||'')+' '+(l.content||'')).join(' ')).slice(0,6000))
+    const r=await fetch(`https://api.lever.co/v0/postings/${token}?mode=json`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return (Array.isArray(d)?d:[]).filter(j=>relevant(j.text)).map(j=>({
+      id:'lv-'+j.id, source:'lever',
+      title:j.text,
+      company:token.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      location:(j.categories||{}).location||'',
+      url:j.hostedUrl||`https://jobs.lever.co/${token}/${j.id}`,
+      posted:j.createdAt?new Date(j.createdAt).toISOString():null,
+      jd:stripHtml(((j.descriptionBody||'')+(j.lists||[]).map(l=>(l.text||'')+' '+(l.content||'')).join(' ')).slice(0,6000))
     }));
-  }catch{ return [] }
+  }catch{return[]}
 }
 
-/* ── FETCH ASHBY ────────────────────────────────────────────────── */
+/* ── FETCH ASHBY ──────────────────────────────────────────── */
 async function fetchASH(token){
   try{
-    const r = await fetch(
-      `https://api.ashbyhq.com/posting-api/job-board/${token}`,
-      { signal: AbortSignal.timeout(8000) }
-    );
-    if(!r.ok) return [];
-    const d = await r.json();
-    return (d.jobPostings||[]).filter(j => relevant(j.title)).map(j=>({
-      id: 'ash-'+j.id, source: 'ashby',
-      title: j.title,
-      company: token.replace(/-/g,' ').replace(/\b\w/g, c=>c.toUpperCase()),
-      location: j.isRemote ? 'Remote' : (j.locationName||''),
-      url: j.jobUrl || `https://jobs.ashbyhq.com/${token}/${j.id}`,
-      posted: j.publishedAt || null,
-      jd: stripHtml((j.descriptionHtml||j.descriptionPlain||'').slice(0,6000))
+    const r=await fetch(`https://api.ashbyhq.com/posting-api/job-board/${token}`,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return (d.jobPostings||[]).filter(j=>relevant(j.title)).map(j=>({
+      id:'ash-'+j.id, source:'ashby',
+      title:j.title,
+      company:token.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      location:j.isRemote?'Remote':(j.locationName||''),
+      url:j.jobUrl||`https://jobs.ashbyhq.com/${token}/${j.id}`,
+      posted:j.publishedAt||null,
+      jd:stripHtml((j.descriptionHtml||j.descriptionPlain||'').slice(0,6000))
     }));
-  }catch{ return [] }
+  }catch{return[]}
 }
 
-/* ── FETCH ADZUNA ───────────────────────────────────────────────── */
+/* ── FETCH ADZUNA (India-focused queries) ─────────────────── */
 async function fetchAdzuna(){
-  const id = lsk('az_id'), key = lsk('az_key');
+  const id=lsk('az_id'), key=lsk('az_key');
   if(!id||!key) return [];
-  const queries = [
-    'technical support engineer india',
-    'api integration engineer india',
-    'production support engineer india',
-    'application support analyst india'
+  const queries=[
+    'technical support engineer',
+    'api integration engineer',
+    'production support engineer',
+    'application support engineer',
+    'l2 support engineer',
+    'customer support engineer saas'
   ];
-  const all = [];
+  const all=[];
   for(const q of queries){
     try{
-      const r = await fetch(
-        `https://api.adzuna.com/v1/api/jobs/in/search/1?app_id=${id}&app_key=${key}&results_per_page=25&what=${encodeURIComponent(q)}&content-type=application/json`,
-        { signal: AbortSignal.timeout(10000) }
-      );
-      if(!r.ok) continue;
-      const d = await r.json();
+      const url=`https://api.adzuna.com/v1/api/jobs/in/search/1?app_id=${id}&app_key=${key}&results_per_page=25&what=${encodeURIComponent(q)}&content-type=application/json`;
+      const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+      if(!r.ok)continue;
+      const d=await r.json();
       all.push(...(d.results||[]).map(j=>({
-        id: 'az-'+j.id, source: 'adzuna',
-        title: j.title,
-        company: (j.company||{}).display_name || '',
-        location: (j.location||{}).display_name || 'India',
-        url: j.redirect_url || '',
-        posted: j.created || null,
-        salary: j.salary_min ? `₹${Math.round(j.salary_min/1000)}k–${Math.round((j.salary_max||j.salary_min)/1000)}k` : '',
-        jd: stripHtml((j.description||'').slice(0,4000))
+        id:'az-'+j.id, source:'adzuna',
+        title:j.title,
+        company:(j.company||{}).display_name||'',
+        location:(j.location||{}).display_name||'India',
+        url:j.redirect_url||'',
+        posted:j.created||null,
+        salary:j.salary_min?`₹${Math.round(j.salary_min/1000)}k–${Math.round((j.salary_max||j.salary_min)/1000)}k`:'',
+        jd:stripHtml((j.description||'').slice(0,4000))
       })));
-    }catch{ continue }
+    }catch{continue}
     await new Promise(r=>setTimeout(r,250));
   }
-  const seen = new Set();
-  return all.filter(j=>{ if(!j.url||seen.has(j.url)) return false; seen.add(j.url); return true; });
+  const seen=new Set();
+  return all.filter(j=>{if(!j.url||seen.has(j.url))return false;seen.add(j.url);return true;});
 }
 
-/* ── FETCH REMOTIVE ─────────────────────────────────────────────── */
+/* ── FETCH REMOTIVE ───────────────────────────────────────── */
 async function fetchRemotive(){
   try{
-    const cats = ['customer-support','devops-sysadmin'];
-    const all = [];
-    for(const cat of cats){
-      const r = await fetch(
-        `https://remotive.com/api/remote-jobs?category=${cat}&limit=30`,
-        { signal: AbortSignal.timeout(10000) }
-      );
-      if(!r.ok) continue;
-      const d = await r.json();
-      all.push(...(d.jobs||[]).filter(j=>relevant(j.title)).map(j=>({
-        id: 'rm-'+j.id, source: 'remotive',
-        title: j.title, company: j.company_name||'',
-        location: 'Remote', url: j.url||'',
-        posted: j.publication_date||null,
-        jd: stripHtml((j.description||'').slice(0,4000))
-      })));
-    }
-    return all;
-  }catch{ return [] }
+    const r=await fetch('https://remotive.com/api/remote-jobs?category=customer-support&limit=50',{signal:AbortSignal.timeout(10000)});
+    if(!r.ok)return[];
+    const d=await r.json();
+    return (d.jobs||[]).filter(j=>relevant(j.title)).map(j=>({
+      id:'rm-'+j.id, source:'remotive',
+      title:j.title, company:j.company_name||'',
+      location:'Remote', url:j.url||'',
+      posted:j.publication_date||null,
+      jd:stripHtml((j.description||'').slice(0,4000))
+    }));
+  }catch{return[]}
 }
 
-/* ── BATCH RUNNER ───────────────────────────────────────────────── */
-async function batchRun(items, fn, label, size=5){
-  const res = [];
-  for(let i=0; i<items.length; i+=size){
-    const rows = await Promise.all(items.slice(i,i+size).map(async t=>{
-      const r = await fn(t);
-      tickProgress(`${label}: scanning ${t}…`);
+/* ── BATCH ────────────────────────────────────────────────── */
+async function batchRun(items,fn,size=6){
+  const res=[];
+  for(let i=0;i<items.length;i+=size){
+    const rows=await Promise.all(items.slice(i,i+size).map(async t=>{
+      const r=await fn(t);
+      fetchDone++;
+      document.getElementById('pfill').style.width=(Math.min(fetchDone/fetchTotal,0.99)*100)+'%';
+      document.getElementById('ptxt').textContent=`Scanning ${fetchDone}/${fetchTotal} — ${t}`;
       return r;
     }));
     res.push(...rows.flat());
-    if(i+size < items.length) await new Promise(r=>setTimeout(r,120));
+    if(i+size<items.length) await new Promise(r=>setTimeout(r,120));
   }
   return res;
 }
 
-/* ── MAIN FETCH ─────────────────────────────────────────────────── */
+/* ── MAIN FETCH ───────────────────────────────────────────── */
 async function fetchAll(){
-  if(fetching) return;
-  fetching = true; fetchDone = 0; jobs = [];
-  selId = null; renderDetail(null);
+  if(fetching)return;
+  fetching=true; fetchDone=0; jobs=[]; selId=null; renderDetail(null);
+  const hasAz=!!(lsk('az_id')&&lsk('az_key'));
+  fetchTotal=GH.length+LV.length+ASH.length+(hasAz?6:0)+1;
+  const btn=document.getElementById('fetch-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spin-sm"></span> Fetching…';
+  const pt=document.getElementById('ptxt'); pt.style.display='block';
 
-  const hasAz = !!(lsk('az_id') && lsk('az_key'));
-  fetchTotal = GH_COMPANIES.length + LV_COMPANIES.length + ASH_COMPANIES.length + (hasAz?4:0) + 2;
-
-  const btn = document.getElementById('fetch-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin-sm"></span> Fetching…';
-
-  const ps = document.getElementById('pstatus');
-  ps.classList.add('show');
-  document.getElementById('pstatus-main').textContent = 'Starting scan…';
-
-  const sources = ['greenhouse','lever','ashby','remotive'];
-  if(hasAz) sources.push('adzuna');
-  initSrcStatus(sources);
-
-  // Run all sources in parallel
-  const [gh, lv, ash] = await Promise.all([
-    batchRun(GH_COMPANIES,  fetchGH,  'Greenhouse'),
-    batchRun(LV_COMPANIES,  fetchLV,  'Lever'),
-    batchRun(ASH_COMPANIES, fetchASH, 'Ashby')
+  const[gh,lv,ash]=await Promise.all([
+    batchRun(GH,fetchGH), batchRun(LV,fetchLV), batchRun(ASH,fetchASH)
   ]);
 
-  setSrcStatus('greenhouse', 'ok', gh.length);
-  setSrcStatus('lever',      'ok', lv.length);
-  setSrcStatus('ashby',      'ok', ash.length);
+  pt.textContent='Fetching Adzuna (Naukri + Indeed + Shine + Monster)…';
+  const az=await fetchAdzuna(); fetchDone=Math.min(fetchDone+6,fetchTotal);
 
-  document.getElementById('pstatus-main').textContent = 'Fetching Adzuna (Naukri + Indeed + Shine)…';
-  const az = await fetchAdzuna();
-  if(hasAz) setSrcStatus('adzuna', 'ok', az.length);
-  else       setSrcStatus('adzuna', 'skip', 0);
-  fetchDone = Math.min(fetchDone+4, fetchTotal);
+  pt.textContent='Fetching Remotive (global remote jobs)…';
+  const rm=await fetchRemotive(); fetchDone=fetchTotal;
+  document.getElementById('pfill').style.width='100%';
 
-  document.getElementById('pstatus-main').textContent = 'Fetching Remotive (remote jobs)…';
-  const rm = await fetchRemotive();
-  setSrcStatus('remotive', 'ok', rm.length);
-  fetchDone = fetchTotal;
-
-  // Merge + deduplicate by URL
-  const seen = new Set();
-  const merged = [...gh,...lv,...ash,...az,...rm].filter(j=>{
-    if(!j.url || seen.has(j.url)) return false;
-    seen.add(j.url); return true;
+  // Merge + deduplicate + tag geo
+  const seen=new Set();
+  const merged=[...gh,...lv,...ash,...az,...rm].filter(j=>{
+    if(!j.url||seen.has(j.url))return false; seen.add(j.url); return true;
   });
-  merged.sort((a,b) => (b.posted?new Date(b.posted):0) - (a.posted?new Date(a.posted):0));
+  merged.forEach(j=>{ j._geo=detectGeo(j.title,j.location); });
+  merged.sort((a,b)=>(b.posted?new Date(b.posted):0)-(a.posted?new Date(a.posted):0));
 
-  // New job detection
-  const freshJobs = merged.filter(j => !seenIds.has(j.id));
-  if(freshJobs.length > 0 && jobs.length > 0){
-    freshJobs.forEach(j => j._isNew = true);
-    showBanner(`🔔 ${freshJobs.length} new job${freshJobs.length>1?'s':''} found since last visit`, 'info');
+  // New job alert
+  const freshJobs=merged.filter(j=>!seenIds.has(j.id));
+  if(freshJobs.length>0 && jobs.length===0===false){
+    freshJobs.forEach(j=>j._isNew=true);
+    showBanner(`🔔 ${freshJobs.length} new job${freshJobs.length>1?'s':''} found since last visit`,'info');
     sendNotif(freshJobs.length);
-    document.getElementById('new-dot').style.display = 'block';
+    document.getElementById('new-dot').style.display='block';
   }
-  const newSeen = new Set([...seenIds, ...merged.map(j=>j.id)]);
-  lss('seenIds', JSON.stringify([...newSeen]));
-  seenIds = newSeen;
+  lss('seenIds',JSON.stringify([...seenIds,...merged.map(j=>j.id)]));
+  seenIds=new Set(JSON.parse(lsk('seenIds')));
 
-  jobs = merged;
+  jobs=merged;
+  const indiaCount=jobs.filter(j=>j._geo==='india').length;
+  const remoteCount=jobs.filter(j=>j._geo==='remote').length;
+  const worldCount=jobs.filter(j=>j._geo==='world').length;
+  const total=jobs.length;
 
-  const total = gh.length + lv.length + ash.length + az.length + rm.length;
-  const azNote = hasAz ? `, ${az.length} Adzuna` : ' · Add Adzuna key for Naukri/Indeed/Shine';
-  doneProgress(`✓ ${total} jobs — GH:${gh.length} LV:${lv.length} ASH:${ash.length}${azNote} RM:${rm.length}`);
+  pt.textContent=`✓ ${total} jobs — 🇮🇳 ${indiaCount} India · 🌐 ${remoteCount} Remote · 🌍 ${worldCount} Worldwide`;
+  if(!hasAz) pt.textContent+=' · Add Adzuna key for more India jobs';
+  setTimeout(()=>{pt.style.display='none';document.getElementById('pfill').style.width='0';},6000);
 
-  if(total === 0){
-    showBanner('⚠ No jobs found. Check your internet connection and try again.', 'error');
-  } else if(total < 10){
-    showBanner(`Found ${total} jobs. Add Adzuna key (⚙ button) to get 10x more from Naukri, Indeed & Shine.`, 'info');
+  if(total===0){
+    showBanner('⚠ No jobs found. Check your internet and try again.','error');
+  } else if(indiaCount+remoteCount<5){
+    showBanner('ℹ Add your Adzuna key (⚙ button) to get Naukri, Indeed & Shine India jobs.','info');
   }
 
-  btn.disabled = false;
-  btn.innerHTML = '⟳ Fetch Jobs';
-  fetching = false;
+  btn.disabled=false; btn.innerHTML='⟳ Fetch Jobs'; fetching=false;
   updateStats(); renderList();
 }
 
-/* ── STATS ──────────────────────────────────────────────────────── */
+/* ── STATS ────────────────────────────────────────────────── */
 function updateStats(){
   const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-  s('sn-all',    jobs.length);
-  s('sn-1h',     jobs.filter(j=>withinTime(j.posted,'1h')).length);
-  s('sn-6h',     jobs.filter(j=>withinTime(j.posted,'6h')).length);
-  s('sn-24h',    jobs.filter(j=>withinTime(j.posted,'24h')).length);
-  s('sn-3d',     jobs.filter(j=>withinTime(j.posted,'3d')).length);
-  s('sn-7d',     jobs.filter(j=>withinTime(j.posted,'7d')).length);
-  s('sn-remote', jobs.filter(j=>isRemote(j.title,j.location)).length);
-  s('sn-saved',  jobs.filter(j=>savedIds.has(j.id)).length);
+  const india=jobs.filter(j=>j._geo==='india');
+  const remote=jobs.filter(j=>j._geo==='remote');
+  const world=jobs.filter(j=>j._geo==='world');
+  s('sn-all',   jobs.length);
+  s('sn-india', india.length);
+  s('sn-remote',remote.length);
+  s('sn-world', world.length);
+  s('sn-1h',    jobs.filter(j=>withinTime(j.posted,'1h')).length);
+  s('sn-6h',    jobs.filter(j=>withinTime(j.posted,'6h')).length);
+  s('sn-24h',   jobs.filter(j=>withinTime(j.posted,'24h')).length);
+  s('sn-3d',    jobs.filter(j=>withinTime(j.posted,'3d')).length);
+  s('sn-7d',    jobs.filter(j=>withinTime(j.posted,'7d')).length);
+  s('sn-saved', jobs.filter(j=>savedIds.has(j.id)).length);
   s('sn-tracker',Object.keys(appData).length);
-  const av = Object.values(appData);
-  s('tr-applied', av.filter(a=>a.status==='applied').length);
-  s('tr-screen',  av.filter(a=>a.status==='screening').length);
-  s('tr-interv',  av.filter(a=>a.status==='interview').length);
-  s('tr-offer',   av.filter(a=>a.status==='offer').length);
-  s('tr-reject',  av.filter(a=>a.status==='rejected').length);
+  const av=Object.values(appData);
+  s('tr-applied',av.filter(a=>a.status==='applied').length);
+  s('tr-screen', av.filter(a=>a.status==='screening').length);
+  s('tr-interv', av.filter(a=>a.status==='interview').length);
+  s('tr-offer',  av.filter(a=>a.status==='offer').length);
+  s('tr-reject', av.filter(a=>a.status==='rejected').length);
 }
 
-/* ── BANNER ─────────────────────────────────────────────────────── */
-function showBanner(msg, type='info'){
-  const b = document.getElementById('banner');
-  b.className = `alert-banner show ${type}`;
-  document.getElementById('banner-txt').textContent = msg;
-}
-function closeBanner(){ document.getElementById('banner').classList.remove('show') }
-
-/* ── NOTIFICATIONS ──────────────────────────────────────────────── */
-async function requestNotif(){
-  if(!('Notification' in window)){ alert('Notifications not supported in this browser.'); return }
-  const p = await Notification.requestPermission();
-  if(p === 'granted'){
-    document.getElementById('notif-btn').style.color = 'var(--lime)';
-    lss('notif','1');
-    new Notification('Job Copilot', { body: 'Alerts enabled! You\'ll be notified of new jobs.' });
-  }
-}
-function sendNotif(count){
-  if(lsk('notif')!=='1') return;
-  if(Notification.permission==='granted'){
-    new Notification('Job Copilot — New Jobs!', {
-      body: `${count} new job${count>1?'s':''} posted. Open dashboard to apply.`
-    });
-  }
-}
-
-/* ── VIEWS ──────────────────────────────────────────────────────── */
-function setView(v, el){
-  curView = v;
+/* ── VIEWS ────────────────────────────────────────────────── */
+let curTopView='all';
+function setTopView(v,el){
+  curTopView=v;
   document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on'));
   el.classList.add('on');
-  const jv = document.getElementById('jobs-view');
-  const tv = document.getElementById('tracker-view');
-  const fb = document.getElementById('filterbar');
-  if(v === 'tracker'){
-    jv.style.display='none'; tv.style.display='flex'; fb.style.display='none';
-    renderTracker(); return;
+  const jv=document.getElementById('jobs-view');
+  const tv=document.getElementById('tracker-view');
+  const gb=document.getElementById('geobar');
+  if(v==='tracker'){jv.style.display='none';tv.style.display='flex';gb.style.display='none';renderTracker();return;}
+  jv.style.display='flex';tv.style.display='flex';gb.style.display='flex';tv.style.display='none';
+  // Sync geo and time filters from topbar pill
+  if(v==='india')  { setGeo('india', document.querySelector('.geo-chip[data-g="india"]')); return; }
+  if(v==='remote') { setGeo('remote',document.querySelector('.geo-chip[data-g="remote"]'));return; }
+  if(v==='world')  { setGeo('world', document.querySelector('.geo-chip[data-g="world"]')); return; }
+  if(['1h','6h','24h','3d','7d'].includes(v)){
+    setTime(v,document.querySelector(`.chip[data-t="${v}"]`)); return;
   }
-  jv.style.display='flex'; tv.style.display='none'; fb.style.display='flex';
-  const timeViews = ['1h','6h','24h','3d','7d'];
-  if(timeViews.includes(v)){
-    timeFilter = v;
-    document.querySelectorAll('.chip[data-t]').forEach(c=>c.classList.remove('on'));
-    const tc = document.querySelector(`.chip[data-t="${v}"]`);
-    if(tc) tc.classList.add('on');
-  }
-  renderList();
-}
-function setTime(t, el){
-  timeFilter = t;
-  document.querySelectorAll('.chip[data-t]').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  const pill = document.querySelector(`.sp[data-v="${t}"]`);
-  if(pill){ document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on')); pill.classList.add('on'); curView=t; }
-  else{ const all = document.querySelector('.sp[data-v="jobs"]'); if(all){ document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on')); all.classList.add('on'); curView='jobs'; } }
-  renderList();
-}
-function toggleSrc(s, el){
-  const oc = 'on-'+s;
-  if(srcFilters.has(s)){ srcFilters.delete(s); el.className='chip'; }
-  else{ srcFilters.add(s); el.className='chip '+oc; }
-  renderList();
-}
-function toggleSort(){
-  sortAsc = !sortAsc;
-  document.getElementById('sort-lbl').textContent = sortAsc ? 'Oldest first' : 'Newest first';
+  if(v==='saved'){ /* handled in getFiltered */ renderList(); return; }
   renderList();
 }
 
+function setGeo(g,el){
+  curGeo=g;
+  if(el){
+    document.querySelectorAll('.geo-chip').forEach(c=>c.className='geo-chip');
+    el.className=`geo-chip on-${g}`;
+  }
+  // sync topbar pill
+  const pill=document.querySelector(`.sp[data-v="${g}"]`);
+  if(pill){document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on'));pill.classList.add('on');curTopView=g;}
+  renderList();
+}
+
+function setTime(t,el){
+  timeFilter=t;
+  if(el){document.querySelectorAll('.chip[data-t]').forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+  // sync topbar
+  const pill=document.querySelector(`.sp[data-v="${t}"]`);
+  if(pill&&['1h','6h','24h','3d','7d'].includes(t)){
+    document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on'));pill.classList.add('on');curTopView=t;
+  }
+  renderList();
+}
+function toggleSrc(s,el){
+  if(srcFilters.has(s)){srcFilters.delete(s);el.className='chip';}
+  else{srcFilters.add(s);el.className=`chip on-${s}`;}
+  renderList();
+}
+function toggleSort(){sortAsc=!sortAsc;document.getElementById('sort-lbl').textContent=sortAsc?'Oldest':'Newest';renderList()}
+
+/* ── FILTER ───────────────────────────────────────────────── */
 function getFiltered(){
-  let j = jobs.filter(x => withinTime(x.posted, timeFilter));
-  if(curView==='remote')  j = j.filter(x => isRemote(x.title, x.location));
-  if(curView==='saved')   j = j.filter(x => savedIds.has(x.id));
-  if(curView==='applied') j = j.filter(x => appliedIds.has(x.id));
+  let j=jobs;
+  // Geo filter
+  if(curGeo==='india')  j=j.filter(x=>x._geo==='india');
+  else if(curGeo==='remote') j=j.filter(x=>x._geo==='remote');
+  else if(curGeo==='world')  j=j.filter(x=>x._geo==='world');
+  // Time
+  j=j.filter(x=>withinTime(x.posted,timeFilter));
+  // Special views
+  if(curTopView==='saved') j=j.filter(x=>savedIds.has(x.id));
+  // Source chips
   if(srcFilters.size){
-    j = j.filter(x => {
-      if(srcFilters.has('gh')     && x.source==='greenhouse') return true;
-      if(srcFilters.has('lv')     && x.source==='lever')      return true;
-      if(srcFilters.has('ash')    && x.source==='ashby')      return true;
-      if(srcFilters.has('az')     && x.source==='adzuna')     return true;
-      if(srcFilters.has('rm')     && x.source==='remotive')   return true;
-      if(srcFilters.has('remote') && isRemote(x.title,x.location)) return true;
+    j=j.filter(x=>{
+      if(srcFilters.has('gh')  && x.source==='greenhouse') return true;
+      if(srcFilters.has('lv')  && x.source==='lever')      return true;
+      if(srcFilters.has('ash') && x.source==='ashby')      return true;
+      if(srcFilters.has('az')  && x.source==='adzuna')     return true;
+      if(srcFilters.has('rm')  && x.source==='remotive')   return true;
       return false;
     });
   }
-  const q = (document.getElementById('search')||{}).value?.toLowerCase()||'';
-  if(q) j = j.filter(x =>
-    x.title.toLowerCase().includes(q) ||
-    x.company.toLowerCase().includes(q) ||
-    x.location.toLowerCase().includes(q)
-  );
-  return [...j].sort((a,b) => {
-    const da = a.posted ? new Date(a.posted).getTime() : 0;
-    const db = b.posted ? new Date(b.posted).getTime() : 0;
-    return sortAsc ? da-db : db-da;
+  // Search
+  const q=(document.getElementById('search')||{}).value?.toLowerCase()||'';
+  if(q) j=j.filter(x=>x.title.toLowerCase().includes(q)||x.company.toLowerCase().includes(q)||x.location.toLowerCase().includes(q));
+  return [...j].sort((a,b)=>{
+    const da=a.posted?new Date(a.posted).getTime():0;
+    const db=b.posted?new Date(b.posted).getTime():0;
+    return sortAsc?da-db:db-da;
   });
 }
 
-/* ── RENDER LIST ────────────────────────────────────────────────── */
+/* ── RENDER LIST ──────────────────────────────────────────── */
 function renderList(){
-  const filtered = getFiltered();
-  const el = document.getElementById('list-scroll');
-  document.getElementById('list-count').textContent =
-    `${filtered.length} job${filtered.length!==1?'s':''}${timeFilter!=='all'?' · '+timeFilter:''}`;
+  const filtered=getFiltered();
+  const el=document.getElementById('list-scroll');
+  const geoLabel=curGeo==='all'?'':(curGeo==='india'?'🇮🇳 India':curGeo==='remote'?'🌐 Remote':'🌍 Worldwide');
+  document.getElementById('list-count').textContent=
+    `${filtered.length} job${filtered.length!==1?'s':''}${geoLabel?' · '+geoLabel:''}${timeFilter!=='all'?' · '+timeFilter:''}`;
   updateStats();
-
-  if(!filtered.length && jobs.length===0){
+  if(!filtered.length&&jobs.length===0){
     el.innerHTML=`<div class="empty"><div class="ei">🎯</div><div class="et">Ready to fetch</div>
-      <div class="es">Click <strong>⟳ Fetch Jobs</strong> above to pull live job listings.<br><br>Add your <strong>Adzuna key</strong> for Naukri, Shine &amp; Indeed jobs.</div></div>`;
+      <div class="es">Click <strong>⟳ Fetch Jobs</strong> above.<br><br>Then use <strong>🇮🇳 India</strong> or <strong>🌐 Remote</strong> filters.</div></div>`;
     return;
   }
   if(!filtered.length){
-    el.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No jobs match</div>
-      <div class="es">Try <strong>All time</strong> or clear source filters.</div></div>`;
+    const hint=curGeo==='india'?'No India-based jobs found yet. Try <strong>All Locations</strong> or <strong>Remote</strong>.':'No jobs match this filter.';
+    el.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No jobs found</div><div class="es">${hint}</div></div>`;
     return;
   }
-
-  el.innerHTML = filtered.map((j,i) => {
-    const fb = freshBadge(j.posted); const td = timeDiff(j.posted);
-    const remote = isRemote(j.title, j.location);
-    const saved = savedIds.has(j.id); const applied = appliedIds.has(j.id);
-    const sb = SRC_BADGE[j.source]||'b-loc'; const sl = SRC_SHORT[j.source]||j.source;
-    const gUrl = `https://www.google.com/search?q=${encodeURIComponent(j.title+' '+j.company+' jobs')}&ibp=htl;jobs`;
-    return `<div class="jcard${selId===j.id?' sel':''}${applied?' is-applied':''}${saved&&!applied?' is-saved':''}${j._isNew?' is-new-job':''}"
+  el.innerHTML=filtered.map((j,i)=>{
+    const fb=freshBadge(j.posted);const td=timeDiff(j.posted);
+    const saved=savedIds.has(j.id);const applied=appliedIds.has(j.id);
+    const sb=SB[j.source]||'b-loc';const sl=SS[j.source]||j.source;
+    const gUrl=`https://www.google.com/search?q=${encodeURIComponent(j.title+' '+j.company+' jobs')}&ibp=htl;jobs`;
+    return`<div class="jcard${selId===j.id?' sel':''}${applied?' is-applied':''}${saved&&!applied?' is-saved':''}${j._isNew?' is-new-job':''}"
       style="animation-delay:${Math.min(i*.02,.4)}s" onclick="selectJob('${j.id}')">
       <div class="jc-title">${j.title}</div>
       <div class="jc-company">${j.company}</div>
       <div class="jc-badges">
         <span class="badge ${sb}">${sl}</span>
-        ${j.location?`<span class="badge b-loc">📍 ${j.location.slice(0,24)}</span>`:''}
-        ${remote?`<span class="badge b-remote">Remote</span>`:''}
+        ${geoPill(j._geo)}
+        ${j.location?`<span class="badge b-loc">📍 ${j.location.slice(0,22)}</span>`:''}
         ${fb?`<span class="badge ${fb.c}">${fb.t}</span>`:''}
         ${j.salary?`<span class="badge b-loc">💰 ${j.salary}</span>`:''}
         ${applied?`<span class="badge b-applied">Applied</span>`:''}
@@ -906,65 +856,49 @@ function renderList(){
       <div class="jc-right">
         <span class="jc-time">${td}</span>
         <div class="jc-acts">
-          <button class="ib${saved?' s-on':''}" title="${saved?'Unsave':'Save'}" onclick="event.stopPropagation();toggleSave('${j.id}')">⊹</button>
-          <button class="ib${applied?' a-on':''}" title="${applied?'Undo':'Mark applied'}" onclick="event.stopPropagation();markApplied('${j.id}')">✓</button>
-          <a class="ib" href="${gUrl}" target="_blank" rel="noopener" title="Google Jobs search" onclick="event.stopPropagation()">🔍</a>
+          <button class="ib${saved?' s-on':''}" title="Save" onclick="event.stopPropagation();toggleSave('${j.id}')">⊹</button>
+          <button class="ib${applied?' a-on':''}" title="Mark applied" onclick="event.stopPropagation();markApplied('${j.id}')">✓</button>
+          <a class="ib" href="${gUrl}" target="_blank" rel="noopener" title="Google Jobs" onclick="event.stopPropagation()">🔍</a>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ── SELECT + DETAIL ────────────────────────────────────────────── */
+/* ── SELECT + DETAIL ──────────────────────────────────────── */
 function selectJob(id){
-  selId = id;
-  const job = jobs.find(j=>j.id===id);
-  renderList();
-  renderDetail(job);
-  // Load JD on demand for Greenhouse jobs
-  if(job && job.source==='greenhouse' && !job.jd && job._ghToken){
-    loadGHjd(job);
-  }
+  selId=id; const job=jobs.find(j=>j.id===id);
+  renderList(); renderDetail(job);
+  if(job&&job.source==='greenhouse'&&!job.jd&&job._ghToken) loadAndShowJd(job);
 }
-
-async function loadGHjd(job){
-  const jdEl = document.getElementById('jd-content');
-  if(!jdEl) return;
-  jdEl.innerHTML = `<div class="jd-loading"><div class="spin-muted"></div> Loading job description…</div>`;
-  const jd = await fetchGHjd(job._ghToken, job._ghId);
-  job.jd = jd || 'Could not load JD. Click Apply to view on Greenhouse.';
-  if(document.getElementById('jd-content'))
-    document.getElementById('jd-content').innerHTML = `<div class="jd-text">${job.jd}</div>`;
+async function loadAndShowJd(job){
+  const el=document.getElementById('jd-content');if(!el)return;
+  el.innerHTML=`<div class="jd-loading"><div class="spin-muted"></div> Loading job description…</div>`;
+  const jd=await loadGHjd(job._ghToken,job._ghId);
+  job.jd=jd||'Click Apply to view the full description on Greenhouse.';
+  const el2=document.getElementById('jd-content');
+  if(el2)el2.innerHTML=`<div class="jd-text">${job.jd}</div>`;
 }
-
 function renderDetail(job){
-  const el = document.getElementById('detail');
-  if(!job){
-    el.innerHTML=`<div class="detail-empty"><div class="de-icon">←</div><div class="de-txt">Select a job to view details &amp; apply</div></div>`;
-    return;
-  }
-  const fb = freshBadge(job.posted); const td = timeDiff(job.posted);
-  const remote = isRemote(job.title, job.location);
-  const saved = savedIds.has(job.id); const applied = appliedIds.has(job.id);
-  const note = notesMap[job.id]||'';
-  const sn = SRC_FULL[job.source]||job.source;
-  const sb = SRC_BADGE[job.source]||'b-loc';
-  const q = encodeURIComponent(job.title);
-  const co = encodeURIComponent(job.company);
-  const slug = job.title.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-
-  const jdHtml = job.jd
-    ? `<div class="jd-text">${job.jd}</div>`
-    : job.source==='greenhouse'
-      ? `<div class="jd-loading" id="jd-content"><div class="spin-muted"></div> Loading job description…</div>`
-      : `<div id="jd-content" class="jd-text">Click Apply to view the full description on the company's site.</div>`;
-
-  el.innerHTML = `
+  const el=document.getElementById('detail');
+  if(!job){el.innerHTML=`<div class="detail-empty"><div class="de-icon">←</div><div class="de-txt">Select a job to view details &amp; apply</div></div>`;return;}
+  const fb=freshBadge(job.posted);const td=timeDiff(job.posted);
+  const saved=savedIds.has(job.id);const applied=appliedIds.has(job.id);
+  const note=notesMap[job.id]||'';
+  const sn=SF[job.source]||job.source;const sb=SB[job.source]||'b-loc';
+  const q=encodeURIComponent(job.title);const co=encodeURIComponent(job.company);
+  const slug=job.title.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  const jdHtml=job.jd
+    ?`<div class="jd-text">${job.jd}</div>`
+    :job.source==='greenhouse'
+      ?`<div id="jd-content" class="jd-loading"><div class="spin-muted"></div> Loading…</div>`
+      :`<div id="jd-content" class="jd-text">Click Apply to view the full description on the company site.</div>`;
+  el.innerHTML=`
   <div class="dhero">
     <div class="dh-badges">
       <span class="badge ${sb}">${sn}</span>
+      ${geoPill(job._geo||'remote')}
       ${job.location?`<span class="badge b-loc">📍 ${job.location}</span>`:''}
-      ${remote?`<span class="badge b-remote">Remote</span>`:''}
       ${fb?`<span class="badge ${fb.c}">${fb.t}</span>`:''}
       ${td?`<span class="badge b-loc">${td}</span>`:''}
       ${job.salary?`<span class="badge b-loc">💰 ${job.salary}</span>`:''}
@@ -985,163 +919,130 @@ function renderDetail(job){
       <div class="info-cell"><div class="ic-lbl">Location</div><div class="ic-val">${job.location||'Not specified'}</div></div>
       <div class="info-cell"><div class="ic-lbl">Posted</div><div class="ic-val">${job.posted?new Date(job.posted).toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'Unknown'}</div></div>
     </div>
-    <div class="sec">Also search this role on</div>
+    <div class="sec">Search this role on</div>
     <div class="also-search">
       <a class="qs-btn" href="https://www.google.com/search?q=${q}+${co}+jobs+India&ibp=htl;jobs" target="_blank" rel="noopener">🔍 Google Jobs</a>
       <a class="qs-btn" href="https://www.hirist.tech/k/${slug}-jobs" target="_blank" rel="noopener">💻 hirist.tech</a>
       <a class="qs-btn" href="https://www.shine.com/job-search/${slug}-jobs" target="_blank" rel="noopener">✨ Shine</a>
       <a class="qs-btn" href="https://www.naukri.com/${slug}-jobs-in-india?q=${q}" target="_blank" rel="noopener">🟠 Naukri</a>
       <a class="qs-btn" href="https://www.linkedin.com/jobs/search/?keywords=${q}+${co}&location=India&f_TPR=r604800" target="_blank" rel="noopener">🔵 LinkedIn</a>
-      <a class="qs-btn" href="https://in.indeed.com/jobs?q=${q}+${co}" target="_blank" rel="noopener">🟢 Indeed</a>
+      <a class="qs-btn" href="https://in.indeed.com/jobs?q=${q}+${co}&l=India" target="_blank" rel="noopener">🟢 Indeed</a>
       <a class="qs-btn" href="https://www.wellfound.com/jobs?q=${q}" target="_blank" rel="noopener">⚡ Wellfound</a>
       <a class="qs-btn" href="https://www.foundit.in/srp/results?query=${q}" target="_blank" rel="noopener">🎯 Foundit</a>
     </div>
     <div class="sec">Job Description</div>
     <div id="jd-content">${jdHtml}</div>
     <div class="sec">Notes</div>
-    <textarea class="notes-area" id="note-${job.id}" placeholder="Recruiter · salary · stage · follow-up date…">${note}</textarea>
+    <textarea class="notes-area" id="note-${job.id}" placeholder="Recruiter · salary · interview stage · follow-up date…">${note}</textarea>
     <button class="save-note-btn" onclick="saveNote('${job.id}')">Save Note</button>
   </div>`;
 }
 
-/* ── TRACKER ────────────────────────────────────────────────────── */
-const STAGES = [
-  {key:'applied',   label:'Applied',   cls:'stage-applied'},
-  {key:'screening', label:'Screening', cls:'stage-screening'},
-  {key:'interview', label:'Interview', cls:'stage-interview'},
-  {key:'offer',     label:'Offer',     cls:'stage-offer'},
-  {key:'rejected',  label:'Rejected',  cls:'stage-rejected'},
+/* ── TRACKER ──────────────────────────────────────────────── */
+const STAGES=[
+  {key:'applied',label:'Applied',cls:'stage-applied'},
+  {key:'screening',label:'Screening',cls:'stage-screening'},
+  {key:'interview',label:'Interview',cls:'stage-interview'},
+  {key:'offer',label:'Offer',cls:'stage-offer'},
+  {key:'rejected',label:'Rejected',cls:'stage-rejected'},
 ];
 function renderTracker(){
   updateStats();
-  const jobMap = {};
-  jobs.forEach(j => jobMap[j.id]=j);
-  document.getElementById('kanban').innerHTML = STAGES.map(stage=>{
-    const cards = Object.entries(appData)
-      .filter(([,a])=>a.status===stage.key)
-      .map(([id,a])=>{
-        const job = jobMap[id];
-        const title = job?job.title:(a.title||'Unknown role');
-        const company = job?job.company:(a.company||'Unknown company');
-        const url = job?job.url:'#';
-        const isOverdue = a.followup && new Date(a.followup) < new Date();
-        const daysSince = a.appliedDate ? Math.round((Date.now()-new Date(a.appliedDate).getTime())/86400000) : null;
-        return `<div class="k-card" onclick="openAppModal('${id}')">
-          <div class="k-card-title">${title}</div>
-          <div class="k-card-co">${company}</div>
-          ${a.salary?`<div style="font-size:9px;color:var(--green);margin-top:3px">💰 ${a.salary}</div>`:''}
-          ${a.recruiter?`<div style="font-size:9px;color:var(--muted);margin-top:2px">👤 ${a.recruiter}</div>`:''}
-          <div class="k-card-date ${isOverdue?'k-card-overdue':''}">
-            ${daysSince!==null?`Applied ${daysSince}d ago`:''}
-            ${a.followup?` · Follow-up: ${new Date(a.followup).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`:''}
-            ${isOverdue?' ⚠ Overdue':''}
-          </div>
-          <div class="k-actions" onclick="event.stopPropagation()">
-            ${STAGES.filter(s=>s.key!==stage.key).slice(0,3).map(s=>
-              `<button class="k-btn" onclick="quickMove('${id}','${s.key}')">${s.label}</button>`
-            ).join('')}
-            <a class="k-btn" href="${url}" target="_blank" rel="noopener">Apply ↗</a>
-          </div>
-        </div>`;
-      }).join('') || `<div class="k-empty">Drop applications here</div>`;
-    const count = Object.values(appData).filter(a=>a.status===stage.key).length;
-    return `<div class="k-col ${stage.cls}">
+  const jobMap={};jobs.forEach(j=>jobMap[j.id]=j);
+  document.getElementById('kanban').innerHTML=STAGES.map(stage=>{
+    const cards=Object.entries(appData).filter(([,a])=>a.status===stage.key).map(([id,a])=>{
+      const job=jobMap[id];
+      const title=job?job.title:(a.title||'Unknown role');
+      const company=job?job.company:(a.company||'');
+      const url=job?job.url:'#';
+      const isOverdue=a.followup&&new Date(a.followup)<new Date();
+      const days=a.appliedDate?Math.round((Date.now()-new Date(a.appliedDate).getTime())/86400000):null;
+      return`<div class="k-card" onclick="openAppModal('${id}')">
+        <div class="k-card-title">${title}</div>
+        <div class="k-card-co">${company}</div>
+        ${a.salary?`<div style="font-size:9px;color:var(--green);margin-top:3px">💰 ${a.salary}</div>`:''}
+        ${a.recruiter?`<div style="font-size:9px;color:var(--muted);margin-top:2px">👤 ${a.recruiter}</div>`:''}
+        <div class="k-card-date ${isOverdue?'k-card-overdue':''}">
+          ${days!==null?`${days}d ago`:''}
+          ${a.followup?` · ${new Date(a.followup).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`:''}
+          ${isOverdue?' ⚠ Overdue':''}
+        </div>
+        <div class="k-actions" onclick="event.stopPropagation()">
+          ${STAGES.filter(s=>s.key!==stage.key).slice(0,3).map(s=>`<button class="k-btn" onclick="quickMove('${id}','${s.key}')">${s.label}</button>`).join('')}
+          <a class="k-btn" href="${url}" target="_blank" rel="noopener">Apply ↗</a>
+        </div>
+      </div>`;
+    }).join('')||`<div class="k-empty">No applications yet</div>`;
+    const count=Object.values(appData).filter(a=>a.status===stage.key).length;
+    return`<div class="k-col ${stage.cls}">
       <div class="k-head"><span class="k-title">${stage.label}</span><span class="k-count">${count}</span></div>
       <div class="k-cards">${cards}</div>
     </div>`;
   }).join('');
 }
-function quickMove(id, status){
-  if(!appData[id]) appData[id]={};
-  appData[id].status = status;
-  persist(); updateStats(); renderTracker();
-}
+function quickMove(id,status){if(!appData[id])appData[id]={};appData[id].status=status;persist();updateStats();renderTracker();}
 
-/* ── ACTIONS ────────────────────────────────────────────────────── */
-function toggleSave(id){
-  savedIds.has(id) ? savedIds.delete(id) : savedIds.add(id);
-  persist(); updateStats(); renderList();
-  if(selId===id) renderDetail(jobs.find(j=>j.id===id));
-}
+/* ── ACTIONS ──────────────────────────────────────────────── */
+function toggleSave(id){savedIds.has(id)?savedIds.delete(id):savedIds.add(id);persist();updateStats();renderList();if(selId===id)renderDetail(jobs.find(j=>j.id===id));}
 function markApplied(id){
-  if(appliedIds.has(id)){
-    appliedIds.delete(id); delete appData[id];
-  } else {
+  if(appliedIds.has(id)){appliedIds.delete(id);delete appData[id];}
+  else{
     appliedIds.add(id);
-    const job = jobs.find(j=>j.id===id);
-    appData[id] = {
-      status:'applied', appliedDate:new Date().toISOString().split('T')[0],
-      recruiter:'', salary:'', followup:'', notes:'',
-      title:job?job.title:'', company:job?job.company:''
-    };
+    const job=jobs.find(j=>j.id===id);
+    appData[id]={status:'applied',appliedDate:new Date().toISOString().split('T')[0],recruiter:'',salary:'',followup:'',notes:'',title:job?job.title:'',company:job?job.company:''};
     openAppModal(id);
   }
-  persist(); updateStats(); renderList();
-  if(selId===id) renderDetail(jobs.find(j=>j.id===id));
+  persist();updateStats();renderList();if(selId===id)renderDetail(jobs.find(j=>j.id===id));
 }
 function saveNote(id){
-  const v = document.getElementById('note-'+id)?.value||'';
-  notesMap[id] = v; persist();
-  const btn = document.querySelector('.save-note-btn');
-  if(btn){ btn.textContent='✓ Saved'; btn.style.color='var(--green)'; setTimeout(()=>{ btn.textContent='Save Note'; btn.style.color=''; },1500); }
+  const v=document.getElementById('note-'+id)?.value||'';notesMap[id]=v;persist();
+  const btn=document.querySelector('.save-note-btn');
+  if(btn){btn.textContent='✓ Saved';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent='Save Note';btn.style.color='';},1500);}
 }
 
-/* ── APP MODAL ──────────────────────────────────────────────────── */
-let _appId = null;
+/* ── APP MODAL ────────────────────────────────────────────── */
+let _appId=null;
 function openAppModal(id){
-  _appId = id;
-  const job = jobs.find(j=>j.id===id);
-  const data = appData[id]||{};
-  document.getElementById('app-modal-title').textContent = (job?job.title:'Application')+' — '+(job?job.company:'');
-  document.getElementById('app-status').value = data.status||'applied';
-  document.getElementById('app-recruiter').value = data.recruiter||'';
-  document.getElementById('app-salary').value = data.salary||'';
-  document.getElementById('app-followup').value = data.followup||'';
-  document.getElementById('app-notes').value = data.notes||'';
+  _appId=id;const job=jobs.find(j=>j.id===id);const data=appData[id]||{};
+  document.getElementById('app-modal-title').textContent=(job?job.title:'Application')+' — '+(job?job.company:'');
+  document.getElementById('app-status').value=data.status||'applied';
+  document.getElementById('app-recruiter').value=data.recruiter||'';
+  document.getElementById('app-salary').value=data.salary||'';
+  document.getElementById('app-followup').value=data.followup||'';
+  document.getElementById('app-notes').value=data.notes||'';
   document.getElementById('app-modal').classList.add('show');
 }
-function closeAppModal(){ document.getElementById('app-modal').classList.remove('show'); _appId=null; }
+function closeAppModal(){document.getElementById('app-modal').classList.remove('show');_appId=null;}
 function saveAppModal(){
-  if(!_appId) return;
-  const existing = appData[_appId]||{};
-  const job = jobs.find(j=>j.id===_appId);
-  appData[_appId] = {
-    ...existing,
-    status:    document.getElementById('app-status').value,
-    recruiter: document.getElementById('app-recruiter').value,
-    salary:    document.getElementById('app-salary').value,
-    followup:  document.getElementById('app-followup').value,
-    notes:     document.getElementById('app-notes').value,
-    appliedDate: existing.appliedDate||new Date().toISOString().split('T')[0],
-    title:   job?job.title:existing.title||'',
-    company: job?job.company:existing.company||''
-  };
-  appliedIds.add(_appId);
-  persist(); updateStats(); closeAppModal();
-  if(curView==='tracker') renderTracker();
-  else{ renderList(); if(selId===_appId) renderDetail(jobs.find(j=>j.id===_appId)); }
+  if(!_appId)return;
+  const existing=appData[_appId]||{};const job=jobs.find(j=>j.id===_appId);
+  appData[_appId]={...existing,status:document.getElementById('app-status').value,recruiter:document.getElementById('app-recruiter').value,salary:document.getElementById('app-salary').value,followup:document.getElementById('app-followup').value,notes:document.getElementById('app-notes').value,appliedDate:existing.appliedDate||new Date().toISOString().split('T')[0],title:job?job.title:existing.title||'',company:job?job.company:existing.company||''};
+  appliedIds.add(_appId);persist();updateStats();closeAppModal();
+  if(curTopView==='tracker')renderTracker();
+  else{renderList();if(selId===_appId)renderDetail(jobs.find(j=>j.id===_appId));}
 }
 
-/* ── ADZUNA MODAL ───────────────────────────────────────────────── */
-function openAzModal(){
-  document.getElementById('az-id').value = lsk('az_id')||'';
-  document.getElementById('az-key').value = lsk('az_key')||'';
-  document.getElementById('az-modal').classList.add('show');
-}
-function closeAzModal(){ document.getElementById('az-modal').classList.remove('show') }
-function saveAzKey(){
-  lss('az_id', document.getElementById('az-id').value.trim());
-  lss('az_key', document.getElementById('az-key').value.trim());
-  closeAzModal(); fetchAll();
-}
+/* ── ADZUNA MODAL ─────────────────────────────────────────── */
+function openAzModal(){document.getElementById('az-id').value=lsk('az_id')||'';document.getElementById('az-key').value=lsk('az_key')||'';document.getElementById('az-modal').classList.add('show');}
+function closeAzModal(){document.getElementById('az-modal').classList.remove('show');}
+function saveAzKey(){lss('az_id',document.getElementById('az-id').value.trim());lss('az_key',document.getElementById('az-key').value.trim());closeAzModal();fetchAll();}
 
-/* ── INIT ───────────────────────────────────────────────────────── */
-if(lsk('notif')==='1' && typeof Notification!=='undefined' && Notification.permission==='granted'){
-  document.getElementById('notif-btn').style.color = 'var(--lime)';
+/* ── NOTIFICATIONS ────────────────────────────────────────── */
+async function requestNotif(){
+  if(!('Notification' in window)){alert('Notifications not supported.');return;}
+  const p=await Notification.requestPermission();
+  if(p==='granted'){document.getElementById('notif-btn').style.color='var(--lime)';lss('notif','1');new Notification('Job Copilot',{body:'Alerts enabled!'});}
 }
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){ selId=null; renderList(); renderDetail(null); closeAzModal(); closeAppModal(); }
-});
+function sendNotif(count){if(lsk('notif')!=='1')return;if(Notification.permission==='granted')new Notification('Job Copilot — New Jobs!',{body:`${count} new job${count>1?'s':''} found. Open dashboard to apply.`});}
+
+/* ── BANNER ───────────────────────────────────────────────── */
+function showBanner(msg,type='info'){const b=document.getElementById('banner');b.className=`banner show ${type}`;document.getElementById('banner-txt').textContent=msg;}
+function closeBanner(){document.getElementById('banner').classList.remove('show');}
+
+/* ── INIT ─────────────────────────────────────────────────── */
+if(lsk('notif')==='1'&&typeof Notification!=='undefined'&&Notification.permission==='granted')
+  document.getElementById('notif-btn').style.color='var(--lime)';
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){selId=null;renderList();renderDetail(null);closeAzModal();closeAppModal();}});
 </script>
 </body>
 </html>
